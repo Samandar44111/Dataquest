@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DataQuest · Your Data Science Journey</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root {
+  --bg: #080c14;
+  --bg2: #0d1220;
+  --bg3: #111827;
+  --cyan: #00e5ff;
+  --cyan2: #00b8d4;
+  --green: #00ff88;
+  --orange: #ff6b35;
+  --purple: #a855f7;
+  --yellow: #ffd600;
+  --red: #ff4444;
+  --text: #e2e8f0;
+  --muted: #64748b;
+  --border: rgba(0,229,255,0.12);
+  --card: rgba(13,18,32,0.9);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Rajdhani', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Animated grid background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Glow orbs */
+body::after {
+  content: '';
+  position: fixed;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(0,229,255,0.06) 0%, transparent 70%);
+  top: -200px; left: -200px;
+  pointer-events: none;
+  z-index: 0;
+  animation: orbFloat 8s ease-in-out infinite;
+}
+
+@keyframes orbFloat {
+  0%,100% { transform: translate(0,0); }
+  50% { transform: translate(100px, 80px); }
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(8,12,20,0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  height: 60px;
+}
+
+.logo {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: var(--cyan);
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 20px rgba(0,229,255,0.5);
+}
+
+.logo span { color: var(--green); }
+
+.nav-tabs {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.nav-tab {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.nav-tab:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+.nav-tab.active { color: var(--cyan); background: rgba(0,229,255,0.1); border: 1px solid rgba(0,229,255,0.2); }
+
+.xp-display {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--yellow);
+}
+
+.xp-badge {
+  background: rgba(255,214,0,0.1);
+  border: 1px solid rgba(255,214,0,0.3);
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+}
+
+/* MAIN */
+main {
+  padding-top: 70px;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+.page { display: none; padding: 2rem; max-width: 1000px; margin: 0 auto; }
+.page.active { display: block; animation: fadeIn 0.4s ease; }
+
+@keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+/* PAGE HEADERS */
+.page-header {
+  margin-bottom: 2rem;
+}
+
+.page-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--cyan);
+  text-shadow: 0 0 30px rgba(0,229,255,0.3);
+  margin-bottom: 0.3rem;
+}
+
+.page-sub {
+  font-size: 0.85rem;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+
+/* DASHBOARD */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent, var(--cyan));
+}
+
+.stat-num {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--accent, var(--cyan));
+  display: block;
+  text-shadow: 0 0 15px var(--accent, rgba(0,229,255,0.5));
+}
+
+.stat-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 0.3rem;
+}
+
+/* Level bar */
+.level-section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.level-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.level-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.9rem;
+  color: var(--green);
+}
+
+.level-xp {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.progress-bar {
+  height: 8px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--cyan), var(--green));
+  border-radius: 4px;
+  transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
+  box-shadow: 0 0 10px rgba(0,229,255,0.5);
+  position: relative;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 20px; height: 100%;
+  background: rgba(255,255,255,0.4);
+  filter: blur(4px);
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer { 0%,100%{opacity:0.4} 50%{opacity:1} }
+
+/* ROADMAP */
+.roadmap {
+  position: relative;
+}
+
+.roadmap::before {
+  content: '';
+  position: absolute;
+  left: 20px; top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--cyan), var(--purple), var(--green));
+  opacity: 0.3;
+}
+
+.phase {
+  margin-bottom: 1.5rem;
+  padding-left: 3rem;
+  position: relative;
+}
+
+.phase-dot {
+  position: absolute;
+  left: 12px;
+  top: 1.2rem;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--phase-color, var(--cyan));
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.55rem;
+  color: var(--phase-color, var(--cyan));
+  box-shadow: 0 0 10px var(--phase-color, rgba(0,229,255,0.3));
+  transition: all 0.3s;
+}
+
+.phase.completed .phase-dot {
+  background: var(--phase-color, var(--cyan));
+  color: var(--bg);
+}
+
+.phase-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--phase-color, var(--cyan));
+  border-radius: 0 8px 8px 0;
+  padding: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.phase-card:hover {
+  background: rgba(0,229,255,0.04);
+  transform: translateX(3px);
+}
+
+.phase-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+
+.phase-name {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.85rem;
+  color: var(--phase-color, var(--cyan));
+}
+
+.phase-duration {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--muted);
+  background: rgba(255,255,255,0.04);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.topic {
+  font-size: 0.7rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.topic.done {
+  background: rgba(0,255,136,0.1);
+  border-color: rgba(0,255,136,0.3);
+  color: var(--green);
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+.topic:hover { border-color: var(--phase-color, var(--cyan)); color: var(--phase-color, var(--cyan)); }
+
+.phase-progress {
+  margin-top: 0.8rem;
+  height: 3px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.phase-progress-fill {
+  height: 100%;
+  background: var(--phase-color, var(--cyan));
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+/* QUIZ */
+.quiz-container {
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.quiz-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 1rem;
+}
+
+.quiz-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--muted);
+}
+
+.quiz-category {
+  color: var(--orange);
+  background: rgba(255,107,53,0.1);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid rgba(255,107,53,0.2);
+}
+
+.quiz-q {
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  color: var(--text);
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.quiz-opt {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 0.9rem 1.2rem;
+  cursor: pointer;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.9rem;
+  color: var(--text);
+  text-align: left;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.quiz-opt:hover:not(:disabled) {
+  border-color: var(--cyan);
+  background: rgba(0,229,255,0.05);
+  color: var(--cyan);
+}
+
+.quiz-opt.correct { border-color: var(--green); background: rgba(0,255,136,0.1); color: var(--green); }
+.quiz-opt.wrong { border-color: var(--red); background: rgba(255,68,68,0.1); color: var(--red); }
+.quiz-opt:disabled { cursor: default; }
+
+.opt-letter {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.6rem;
+  flex-shrink: 0;
+}
+
+.quiz-feedback {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  display: none;
+  line-height: 1.6;
+}
+
+.quiz-feedback.show { display: block; animation: fadeIn 0.3s ease; }
+.quiz-feedback.correct { background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.2); color: var(--green); }
+.quiz-feedback.wrong { background: rgba(255,68,68,0.08); border: 1px solid rgba(255,68,68,0.2); color: #ff8888; }
+
+.quiz-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  justify-content: flex-end;
+}
+
+.btn {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.6rem 1.4rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--cyan), var(--cyan2));
+  color: var(--bg);
+  box-shadow: 0 0 20px rgba(0,229,255,0.25);
+}
+
+.btn-primary:hover { box-shadow: 0 0 30px rgba(0,229,255,0.4); transform: translateY(-1px); }
+.btn-secondary { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--text); }
+.btn-secondary:hover { background: rgba(255,255,255,0.08); }
+
+.quiz-score-display {
+  text-align: center;
+  padding: 2rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.score-big {
+  font-family: 'Orbitron', monospace;
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--cyan);
+  text-shadow: 0 0 40px rgba(0,229,255,0.5);
+  display: block;
+  margin: 1rem 0;
+}
+
+/* PORTFOLIO */
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.project-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s;
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--proj-color, var(--cyan));
+}
+
+.project-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  border-color: var(--proj-color, var(--cyan));
+}
+
+.proj-icon {
+  font-size: 1.8rem;
+  margin-bottom: 0.8rem;
+}
+
+.proj-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.8rem;
+  color: var(--proj-color, var(--cyan));
+  margin-bottom: 0.5rem;
+}
+
+.proj-desc {
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.proj-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+
+.proj-tag {
+  font-size: 0.6rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.05);
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.proj-difficulty {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.65rem;
+  color: var(--muted);
+}
+
+.diff-dots {
+  display: flex;
+  gap: 3px;
+}
+
+.diff-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+}
+.diff-dot.filled { background: var(--proj-color, var(--cyan)); }
+
+/* GAME ANALYTICS SECTION */
+.game-section {
+  background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(0,229,255,0.05));
+  border: 1px solid rgba(168,85,247,0.2);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.game-section::before {
+  content: '🎮';
+  position: absolute;
+  right: 1.5rem;
+  top: 1rem;
+  font-size: 3rem;
+  opacity: 0.15;
+}
+
+.game-section-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 1rem;
+  color: var(--purple);
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 20px rgba(168,85,247,0.4);
+}
+
+.game-section-sub {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+
+.game-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.8rem;
+}
+
+.game-metric {
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(168,85,247,0.15);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.game-metric-val {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.2rem;
+  color: var(--purple);
+  display: block;
+}
+
+.game-metric-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 0.2rem;
+}
+
+/* RESOURCES */
+.resource-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.resource-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.resource-item:hover { border-color: var(--cyan); background: rgba(0,229,255,0.03); transform: translateX(4px); }
+
+.resource-icon {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.resource-info { flex: 1; }
+.resource-name { font-size: 0.9rem; font-weight: 600; color: var(--text); margin-bottom: 0.2rem; }
+.resource-meta { font-size: 0.7rem; color: var(--muted); }
+
+.resource-type {
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+}
+
+/* TOAST */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--bg3);
+  border: 1px solid var(--green);
+  border-radius: 8px;
+  padding: 0.8rem 1.2rem;
+  font-size: 0.8rem;
+  color: var(--green);
+  z-index: 999;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+  font-family: 'JetBrains Mono', monospace;
+  box-shadow: 0 0 20px rgba(0,255,136,0.2);
+}
+
+.toast.show { transform: translateY(0); opacity: 1; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: rgba(0,229,255,0.2); border-radius: 3px; }
+
+@media(max-width:600px){
+  nav { padding: 0 1rem; }
+  .nav-tab { font-size: 0.65rem; padding: 0.3rem 0.5rem; }
+  .logo { font-size: 0.85rem; }
+  .page { padding: 1rem; }
+  .xp-display { display: none; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">DATA<span>QUEST</span></div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('dashboard')">⚡ Home</button>
+    <button class="nav-tab" onclick="showPage('roadmap')">🗺 Roadmap</button>
+    <button class="nav-tab" onclick="showPage('quiz')">🧠 Quiz</button>
+    <button class="nav-tab" onclick="showPage('portfolio')">💼 Projects</button>
+    <button class="nav-tab" onclick="showPage('resources')">📚 Resources</button>
+  </div>
+  <div class="xp-display">
+    ⭐ <span class="xp-badge" id="xp-display">0 XP</span>
+  </div>
+</nav>
+
+<main>
+
+<!-- DASHBOARD -->
+<div class="page active" id="page-dashboard">
+  <div class="page-header">
+    <div class="page-title">MISSION CONTROL</div>
+    <div class="page-sub">Your path from zero to Game Analytics Data Scientist 🎮</div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card" style="--accent:var(--cyan)">
+      <span class="stat-num" id="stat-topics">0</span>
+      <div class="stat-label">Topics Done</div>
+    </div>
+    <div class="stat-card" style="--accent:var(--yellow)">
+      <span class="stat-num" id="stat-xp">0</span>
+      <div class="stat-label">XP Earned</div>
+    </div>
+    <div class="stat-card" style="--accent:var(--green)">
+      <span class="stat-num" id="stat-quiz">0</span>
+      <div class="stat-label">Quiz Score</div>
+    </div>
+    <div class="stat-card" style="--accent:var(--purple)">
+      <span class="stat-num" id="stat-streak">0🔥</span>
+      <div class="stat-label">Day Streak</div>
+    </div>
+  </div>
+
+  <div class="level-section">
+    <div class="level-header">
+      <span class="level-title" id="level-name">⚙️ LEVEL 1 — ROOKIE ANALYST</span>
+      <span class="level-xp" id="level-xp-text">0 / 500 XP</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="level-bar" style="width:0%"></div>
+    </div>
+  </div>
+
+  <div class="game-section">
+    <div class="game-section-title">🎮 GAME ANALYTICS TRACK</div>
+    <div class="game-section-sub">Your specialization — analyzing player behavior for companies like Nexon, Krafton & Riot Korea</div>
+    <div class="game-metrics">
+      <div class="game-metric">
+        <span class="game-metric-val">DAU</span>
+        <div class="game-metric-label">Daily Active Users</div>
+      </div>
+      <div class="game-metric">
+        <span class="game-metric-val">LTV</span>
+        <div class="game-metric-label">Lifetime Value</div>
+      </div>
+      <div class="game-metric">
+        <span class="game-metric-val">Churn</span>
+        <div class="game-metric-label">Player Retention</div>
+      </div>
+      <div class="game-metric">
+        <span class="game-metric-val">A/B</span>
+        <div class="game-metric-label">Feature Testing</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.2rem;">
+    <div style="font-family:'Orbitron',monospace;font-size:0.8rem;color:var(--orange);margin-bottom:1rem;">⚡ QUICK ACTIONS</div>
+    <div style="display:flex;flex-wrap:wrap;gap:0.6rem;">
+      <button class="btn btn-primary" onclick="showPage('roadmap')">Continue Roadmap →</button>
+      <button class="btn btn-secondary" onclick="showPage('quiz')">Take a Quiz 🧠</button>
+      <button class="btn btn-secondary" onclick="showPage('portfolio')">Browse Projects 💼</button>
+    </div>
+  </div>
+</div>
+
+<!-- ROADMAP -->
+<div class="page" id="page-roadmap">
+  <div class="page-header">
+    <div class="page-title">LEARNING ROADMAP</div>
+    <div class="page-sub">Click topics to mark them complete and earn XP ⚡</div>
+  </div>
+  <div class="roadmap" id="roadmap-container"></div>
+</div>
+
+<!-- QUIZ -->
+<div class="page" id="page-quiz">
+  <div class="page-header">
+    <div class="page-title">KNOWLEDGE CHECK</div>
+    <div class="page-sub">Test what you know — earn XP for every correct answer</div>
+  </div>
+  <div class="quiz-container" id="quiz-container"></div>
+</div>
+
+<!-- PORTFOLIO -->
+<div class="page" id="page-portfolio">
+  <div class="page-header">
+    <div class="page-title">PROJECT IDEAS</div>
+    <div class="page-sub">Build these to create a portfolio that gets you hired 🚀</div>
+  </div>
+  <div class="portfolio-grid" id="portfolio-grid"></div>
+</div>
+
+<!-- RESOURCES -->
+<div class="page" id="page-resources">
+  <div class="page-header">
+    <div class="page-title">RESOURCES</div>
+    <div class="page-sub">Best free learning materials — videos, courses, datasets</div>
+  </div>
+  <div class="resource-list" id="resource-list"></div>
+</div>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// STATE
+let state = {
+  xp: 0,
+  completedTopics: new Set(JSON.parse(localStorage.getItem('dq_topics') || '[]')),
+  quizScore: 0,
+  quizTotal: 0,
+  streak: parseInt(localStorage.getItem('dq_streak') || '0'),
+  currentQuiz: 0,
+  quizAnswered: false
+};
+
+// LEVELS
+const levels = [
+  { name: '⚙️ ROOKIE ANALYST', max: 500 },
+  { name: '📊 DATA EXPLORER', max: 1200 },
+  { name: '🔬 ML PRACTITIONER', max: 2500 },
+  { name: '🎮 GAME ANALYST', max: 4500 },
+  { name: '🚀 SENIOR DATA SCIENTIST', max: 999999 }
+];
+
+// ROADMAP DATA
+const phases = [
+  {
+    name: 'PHASE 1 · FOUNDATIONS',
+    duration: 'Month 1–2',
+    color: '#00e5ff',
+    topics: ['Python Basics', 'Variables & Data Types', 'Loops & Functions', 'Math for DS', 'Statistics Basics', 'Excel & Google Sheets', 'Intro to Data']
+  },
+  {
+    name: 'PHASE 2 · DATA SKILLS',
+    duration: 'Month 3–4',
+    color: '#00ff88',
+    topics: ['SQL Fundamentals', 'Database Queries', 'Pandas Library', 'Data Cleaning', 'NumPy Basics', 'Data Visualization', 'Matplotlib & Seaborn']
+  },
+  {
+    name: 'PHASE 3 · MACHINE LEARNING',
+    duration: 'Month 5–8',
+    color: '#ff6b35',
+    topics: ['ML Concepts', 'Linear Regression', 'Classification', 'Decision Trees', 'Random Forest', 'Model Evaluation', 'Scikit-learn']
+  },
+  {
+    name: 'PHASE 4 · ADVANCED',
+    duration: 'Month 9–10',
+    color: '#a855f7',
+    topics: ['Deep Learning Basics', 'Neural Networks', 'TensorFlow/PyTorch', 'Time Series', 'NLP Basics', 'Big Data Tools']
+  },
+  {
+    name: 'PHASE 5 · GAME ANALYTICS 🎮',
+    duration: 'Month 11–12',
+    color: '#ffd600',
+    topics: ['Player Behavior Analysis', 'Churn Prediction', 'A/B Testing Games', 'DAU/MAU Metrics', 'LTV Modeling', 'Funnel Analysis', 'Game KPI Dashboard', 'Cohort Analysis']
+  }
+];
+
+// QUIZ DATA
+const quizzes = [
+  { q: 'What does DAU stand for in game analytics?', opts: ['Daily Active Users', 'Data Analytics Unit', 'Dynamic Analysis Update', 'Daily App Usage'], ans: 0, cat: 'Game Analytics', exp: 'DAU = Daily Active Users. It measures how many unique players play your game in a single day. It\'s one of the most important KPIs in game analytics!' },
+  { q: 'Which Python library is most commonly used for data manipulation?', opts: ['NumPy', 'Pandas', 'Matplotlib', 'Scikit-learn'], ans: 1, cat: 'Python', exp: 'Pandas is the #1 library for data manipulation in Python. You\'ll use it every single day as a data scientist to clean and analyze data.' },
+  { q: 'What is "churn" in game analytics?', opts: ['Players spending money', 'Players who stop playing', 'New player acquisition', 'Game performance bugs'], ans: 1, cat: 'Game Analytics', exp: 'Churn = players who stop playing your game. Predicting churn and preventing it is one of the most valuable things a game data scientist does!' },
+  { q: 'What does SQL stand for?', opts: ['Structured Query Language', 'Simple Question Logic', 'System Query Loop', 'Stored Queue List'], ans: 0, cat: 'SQL', exp: 'SQL = Structured Query Language. You use it to talk to databases and pull data. Every data scientist needs SQL — it\'s unavoidable!' },
+  { q: 'In A/B testing, what are you comparing?', opts: ['Two different games', 'Two versions of a feature', 'Two data scientists', 'Two datasets'], ans: 1, cat: 'Statistics', exp: 'A/B testing compares two versions of a feature (like a button color or game level difficulty) to see which performs better. Huge in game development!' },
+  { q: 'What is LTV in game analytics?', opts: ['Level Time Value', 'Lifetime Value', 'Live Total Views', 'Latency Test Value'], ans: 1, cat: 'Game Analytics', exp: 'LTV = Lifetime Value — the total revenue a player generates over their entire time playing the game. Critical for understanding if your game is profitable.' },
+  { q: 'Which of these is a supervised machine learning task?', opts: ['Clustering players into groups', 'Predicting if a player will quit', 'Finding patterns in data', 'Reducing data dimensions'], ans: 1, cat: 'Machine Learning', exp: 'Predicting if a player will quit (churn) is supervised learning — you have labeled data (players who quit vs didn\'t) and train a model to predict future cases.' },
+  { q: 'What does a data scientist use Python for?', opts: ['Building mobile apps only', 'Design and graphics', 'Analyzing data and building ML models', 'Managing databases only'], ans: 2, cat: 'Python', exp: 'Python is the main language for data science — used for data analysis, visualization, machine learning, automation and much more. It\'s your bread and butter!' }
+];
+
+// PORTFOLIO PROJECTS
+const projects = [
+  { icon: '🎮', title: 'MOBILE LEGENDS CHURN PREDICTOR', desc: 'Analyze which players are about to quit the game using player behavior data. Build a model that predicts churn 7 days in advance.', tags: ['Python', 'Scikit-learn', 'Pandas', 'Classification'], diff: 3, color: '#a855f7' },
+  { icon: '📊', title: 'PLAYER RETENTION DASHBOARD', desc: 'Build an interactive dashboard showing Day 1, Day 7, Day 30 retention rates for a mobile game using real public datasets.', tags: ['Python', 'Plotly', 'SQL', 'Visualization'], diff: 2, color: '#00e5ff' },
+  { icon: '🏁', title: 'HILL CLIMB RACING ANALYTICS', desc: 'Analyze player progression data — which levels do players get stuck on? Use funnel analysis to find the biggest drop-off points.', tags: ['Pandas', 'Matplotlib', 'Funnel Analysis'], diff: 1, color: '#00ff88' },
+  { icon: '💰', title: 'IN-GAME PURCHASE PREDICTOR', desc: 'Predict which players are most likely to make in-app purchases using behavioral features. Classic LTV modeling project.', tags: ['Python', 'ML', 'Revenue Analytics', 'Random Forest'], diff: 3, color: '#ff6b35' },
+  { icon: '🧩', title: 'A/B TEST ANALYSIS TOOL', desc: 'Build a tool that takes A/B test results and automatically calculates statistical significance. Super useful for any game studio.', tags: ['Statistics', 'Python', 'Scipy', 'Visualization'], diff: 2, color: '#ffd600' },
+  { icon: '📈', title: 'GAME SALES TREND ANALYSIS', desc: 'Analyze Steam or mobile game sales data to find trends — which genres are growing? Use public datasets from Kaggle.', tags: ['Pandas', 'SQL', 'Business Analysis', 'Seaborn'], diff: 1, color: '#00b8d4' }
+];
+
+// RESOURCES
+const resources = [
+  { icon: '🐍', name: 'Python for Everybody', meta: 'Coursera · Free to audit · Beginner', type: 'Course', typeColor: '#00e5ff', bg: 'rgba(0,229,255,0.1)' },
+  { icon: '📊', name: 'Kaggle Learn — Pandas', meta: 'Kaggle · 100% Free · Hands-on', type: 'Course', typeColor: '#00ff88', bg: 'rgba(0,255,136,0.1)' },
+  { icon: '🎮', name: 'Game Analytics Datasets', meta: 'Kaggle Datasets · Free · Real game data', type: 'Dataset', typeColor: '#a855f7', bg: 'rgba(168,85,247,0.1)' },
+  { icon: '📺', name: 'StatQuest with Josh Starmer', meta: 'YouTube · Free · Best ML explanations', type: 'Video', typeColor: '#ff6b35', bg: 'rgba(255,107,53,0.1)' },
+  { icon: '🗄️', name: 'SQLZoo', meta: 'sqlzoo.net · Free · Interactive SQL', type: 'Practice', typeColor: '#ffd600', bg: 'rgba(255,214,0,0.1)' },
+  { icon: '🤖', name: 'Fast.ai — Practical Deep Learning', meta: 'fast.ai · Free · Project-based', type: 'Course', typeColor: '#00e5ff', bg: 'rgba(0,229,255,0.1)' },
+  { icon: '📱', name: 'Mobile Game Analytics — GDC Talks', meta: 'YouTube · Free · Industry insights', type: 'Video', typeColor: '#ff6b35', bg: 'rgba(255,107,53,0.1)' },
+  { icon: '💼', name: 'Towards Data Science', meta: 'Medium · Free articles · Real projects', type: 'Reading', typeColor: '#00ff88', bg: 'rgba(0,255,136,0.1)' }
+];
+
+// RENDER ROADMAP
+function renderRoadmap() {
+  const container = document.getElementById('roadmap-container');
+  container.innerHTML = phases.map((phase, pi) => {
+    const phaseTopics = phase.topics.map((t, ti) => {
+      const key = `${pi}-${ti}`;
+      const done = state.completedTopics.has(key);
+      return `<span class="topic ${done ? 'done' : ''}" onclick="toggleTopic('${key}', this)" style="--phase-color:${phase.color}">
+        ${done ? '✓' : '○'} ${t}
+      </span>`;
+    }).join('');
+
+    const doneCount = phase.topics.filter((_, ti) => state.completedTopics.has(`${pi}-${ti}`)).length;
+    const pct = Math.round((doneCount / phase.topics.length) * 100);
+
+    return `<div class="phase ${doneCount === phase.topics.length ? 'completed' : ''}" style="--phase-color:${phase.color}">
+      <div class="phase-dot" style="--phase-color:${phase.color}">${doneCount === phase.topics.length ? '✓' : pi+1}</div>
+      <div class="phase-card">
+        <div class="phase-header">
+          <span class="phase-name" style="color:${phase.color}">${phase.name}</span>
+          <span class="phase-duration">${phase.duration} · ${doneCount}/${phase.topics.length}</span>
+        </div>
+        <div class="topics">${phaseTopics}</div>
+        <div class="phase-progress">
+          <div class="phase-progress-fill" style="width:${pct}%;background:${phase.color}"></div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleTopic(key, el) {
+  if (state.completedTopics.has(key)) {
+    state.completedTopics.delete(key);
+    state.xp = Math.max(0, state.xp - 20);
+    el.classList.remove('done');
+    el.innerHTML = '○ ' + el.textContent.replace('✓ ', '').replace('○ ', '');
+  } else {
+    state.completedTopics.add(key);
+    state.xp += 20;
+    el.classList.add('done');
+    el.innerHTML = '✓ ' + el.textContent.replace('○ ', '').replace('✓ ', '');
+    showToast('+20 XP · Topic Complete! ⚡');
+  }
+  localStorage.setItem('dq_topics', JSON.stringify([...state.completedTopics]));
+  updateStats();
+  renderRoadmap();
+}
+
+// RENDER QUIZ
+function renderQuiz() {
+  const container = document.getElementById('quiz-container');
+  if (state.currentQuiz >= quizzes.length) {
+    const pct = Math.round((state.quizScore / quizzes.length) * 100);
+    container.innerHTML = `<div class="quiz-score-display">
+      <div style="font-family:'Orbitron',monospace;font-size:0.8rem;color:var(--muted);letter-spacing:0.1em;">QUIZ COMPLETE</div>
+      <span class="score-big">${pct}%</span>
+      <div style="color:var(--muted);font-size:0.85rem;margin-bottom:1.5rem;">${state.quizScore} / ${quizzes.length} correct · +${state.quizScore * 50} XP earned</div>
+      <button class="btn btn-primary" onclick="restartQuiz()">RETRY QUIZ 🔄</button>
+    </div>`;
+    return;
+  }
+
+  const q = quizzes[state.currentQuiz];
+  const opts = q.opts.map((o, i) => `
+    <button class="quiz-opt" onclick="answerQuiz(${i}, this)">
+      <span class="opt-letter">${'ABCD'[i]}</span>${o}
+    </button>`).join('');
+
+  container.innerHTML = `<div class="quiz-card">
+    <div class="quiz-meta">
+      <span class="quiz-category">${q.cat}</span>
+      <span>Question ${state.currentQuiz + 1} / ${quizzes.length}</span>
+    </div>
+    <div class="quiz-q">${q.q}</div>
+    <div class="quiz-options">${opts}</div>
+    <div class="quiz-feedback" id="quiz-feedback"></div>
+    <div class="quiz-actions">
+      <button class="btn btn-primary" id="next-btn" style="display:none" onclick="nextQuiz()">NEXT →</button>
+    </div>
+  </div>`;
+}
+
+function answerQuiz(idx, el) {
+  if (state.quizAnswered) return;
+  state.quizAnswered = true;
+  const q = quizzes[state.currentQuiz];
+  const opts = document.querySelectorAll('.quiz-opt');
+  opts.forEach(o => o.disabled = true);
+  const fb = document.getElementById('quiz-feedback');
+
+  if (idx === q.ans) {
+    el.classList.add('correct');
+    state.quizScore++;
+    state.xp += 50;
+    fb.className = 'quiz-feedback correct show';
+    fb.textContent = '✓ Correct! ' + q.exp;
+    showToast('+50 XP · Correct Answer! 🎯');
+  } else {
+    el.classList.add('wrong');
+    opts[q.ans].classList.add('correct');
+    fb.className = 'quiz-feedback wrong show';
+    fb.textContent = '✗ Not quite. ' + q.exp;
+  }
+
+  document.getElementById('next-btn').style.display = 'block';
+  updateStats();
+}
+
+function nextQuiz() {
+  state.currentQuiz++;
+  state.quizAnswered = false;
+  renderQuiz();
+}
+
+function restartQuiz() {
+  state.currentQuiz = 0;
+  state.quizScore = 0;
+  state.quizAnswered = false;
+  renderQuiz();
+}
+
+// RENDER PORTFOLIO
+function renderPortfolio() {
+  document.getElementById('portfolio-grid').innerHTML = projects.map(p => {
+    const dots = [1,2,3].map(i => `<div class="diff-dot ${i <= p.diff ? 'filled' : ''}"></div>`).join('');
+    const tags = p.tags.map(t => `<span class="proj-tag">${t}</span>`).join('');
+    return `<div class="project-card" style="--proj-color:${p.color}">
+      <div class="proj-icon">${p.icon}</div>
+      <div class="proj-title" style="color:${p.color}">${p.title}</div>
+      <div class="proj-desc">${p.desc}</div>
+      <div class="proj-tags">${tags}</div>
+      <div class="proj-difficulty">
+        <div class="diff-dots">${dots}</div>
+        ${'Easy/Medium/Hard'.split('/')[p.diff - 1]} difficulty
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// RENDER RESOURCES
+function renderResources() {
+  document.getElementById('resource-list').innerHTML = resources.map(r => `
+    <div class="resource-item">
+      <div class="resource-icon" style="background:${r.bg};font-size:1.2rem">${r.icon}</div>
+      <div class="resource-info">
+        <div class="resource-name">${r.name}</div>
+        <div class="resource-meta">${r.meta}</div>
+      </div>
+      <span class="resource-type" style="background:${r.bg};color:${r.typeColor};border:1px solid ${r.typeColor}33;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.2rem 0.5rem;border-radius:3px;">${r.type}</span>
+    </div>`).join('');
+}
+
+// UPDATE STATS
+function updateStats() {
+  const topics = state.completedTopics.size;
+  document.getElementById('stat-topics').textContent = topics;
+  document.getElementById('stat-xp').textContent = state.xp;
+  document.getElementById('stat-quiz').textContent = state.quizScore > 0 ? `${Math.round((state.quizScore/Math.max(state.currentQuiz,1))*100)}%` : '0%';
+  document.getElementById('stat-streak').textContent = state.streak + '🔥';
+  document.getElementById('xp-display').textContent = state.xp + ' XP';
+
+  // Level
+  let cumXP = 0;
+  let currentLevel = 0;
+  for (let i = 0; i < levels.length; i++) {
+    if (state.xp < cumXP + levels[i].max) { currentLevel = i; break; }
+    cumXP += levels[i].max;
+    currentLevel = i;
+  }
+  const lv = levels[Math.min(currentLevel, levels.length-1)];
+  const prevMax = currentLevel > 0 ? levels.slice(0, currentLevel).reduce((a,b) => a + b.max, 0) : 0;
+  const pct = Math.min(((state.xp - prevMax) / lv.max) * 100, 100);
+  document.getElementById('level-name').textContent = `${lv.name}`;
+  document.getElementById('level-xp-text').textContent = `${state.xp - prevMax} / ${lv.max} XP`;
+  document.getElementById('level-bar').style.width = pct + '%';
+}
+
+// NAVIGATION
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// TOAST
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// INIT
+renderRoadmap();
+renderQuiz();
+renderPortfolio();
+renderResources();
+updateStats();
+
+// Check streak
+const today = new Date().toDateString();
+const lastVisit = localStorage.getItem('dq_last_visit');
+if (lastVisit !== today) {
+  if (lastVisit === new Date(Date.now() - 86400000).toDateString()) {
+    state.streak++;
+  } else if (!lastVisit) {
+    state.streak = 1;
+  } else {
+    state.streak = 1;
+  }
+  localStorage.setItem('dq_last_visit', today);
+  localStorage.setItem('dq_streak', state.streak);
+}
+updateStats();
+</script>
+</body>
+</html>
