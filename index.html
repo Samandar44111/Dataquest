@@ -2,1046 +2,654 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DataQuest Academy · Learn Data Science From Zero</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a0e1a">
+<title>한글 · Learn Korean</title>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-
-:root {
-  --bg: #080c14;
-  --bg2: #0d1220;
-  --bg3: #111827;
-  --cyan: #00e5ff;
-  --cyan2: #00b8d4;
-  --green: #00ff88;
-  --orange: #ff6b35;
-  --purple: #a855f7;
-  --yellow: #ffd600;
-  --red: #ff4444;
-  --text: #e2e8f0;
-  --muted: #64748b;
-  --border: rgba(0,229,255,0.12);
-  --card: rgba(13,18,32,0.9);
-  --code-bg: #0a0e16;
-}
-
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Rajdhani', sans-serif;
-  min-height: 100vh;
-  overflow-x: hidden;
-  line-height: 1.6;
-}
-
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: 
-    linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* NAV */
-nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  background: rgba(8,12,20,0.97);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 1.2rem;
-  height: 56px;
-}
-
-.logo {
-  font-family: 'Orbitron', monospace;
-  font-size: 0.95rem;
-  font-weight: 900;
-  color: var(--cyan);
-  letter-spacing: 0.05em;
-  text-shadow: 0 0 20px rgba(0,229,255,0.5);
-  cursor: pointer;
-}
-.logo span { color: var(--green); }
-
-.progress-mini {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  color: var(--yellow);
-  background: rgba(255,214,0,0.1);
-  border: 1px solid rgba(255,214,0,0.3);
-  padding: 0.25rem 0.6rem;
-  border-radius: 20px;
-}
-
-main {
-  padding-top: 56px;
-  min-height: 100vh;
-  position: relative;
-  z-index: 1;
-}
-
-.view { display: none; }
-.view.active { display: block; animation: fadeIn 0.4s ease; }
-@keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
-
-/* ===== CURRICULUM (HOME) ===== */
-.hero {
-  padding: 2.5rem 1.2rem 1.5rem;
-  text-align: center;
-  max-width: 700px;
-  margin: 0 auto;
-}
-
-.hero-badge {
-  display: inline-block;
-  font-size: 0.65rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--green);
-  background: rgba(0,255,136,0.08);
-  border: 1px solid rgba(0,255,136,0.25);
-  padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  margin-bottom: 1.2rem;
-}
-
-.hero h1 {
-  font-family: 'Orbitron', monospace;
-  font-size: clamp(1.6rem, 6vw, 2.4rem);
-  font-weight: 900;
-  color: var(--cyan);
-  text-shadow: 0 0 40px rgba(0,229,255,0.3);
-  line-height: 1.1;
-  margin-bottom: 0.8rem;
-}
-
-.hero p {
-  font-size: 0.95rem;
-  color: var(--muted);
-}
-
-.overall-progress {
-  max-width: 700px;
-  margin: 1.5rem auto;
-  padding: 0 1.2rem;
-}
-
-.op-bar {
-  height: 10px;
-  background: rgba(255,255,255,0.05);
-  border-radius: 5px;
-  overflow: hidden;
-}
-.op-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--cyan), var(--green));
-  border-radius: 5px;
-  transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
-  box-shadow: 0 0 10px rgba(0,229,255,0.5);
-}
-.op-text {
-  text-align: center;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  color: var(--muted);
-  margin-top: 0.5rem;
-}
-
-.modules {
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 1rem 1.2rem 3rem;
-}
-
-.module {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-left: 4px solid var(--mod-color, var(--cyan));
-  border-radius: 0 10px 10px 0;
-  margin-bottom: 1rem;
-  overflow: hidden;
-}
-
-.module-head {
-  padding: 1.2rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  transition: background 0.2s;
-}
-.module-head:hover { background: rgba(255,255,255,0.02); }
-
-.mod-icon {
-  font-size: 1.6rem;
-  width: 48px; height: 48px;
-  display: flex; align-items: center; justify-content: center;
-  background: var(--mod-bg, rgba(0,229,255,0.1));
-  border-radius: 10px;
-  flex-shrink: 0;
-}
-
-.mod-info { flex: 1; min-width: 0; }
-.mod-num {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.15em;
-  color: var(--mod-color, var(--cyan));
-  text-transform: uppercase;
-}
-.mod-title {
-  font-family: 'Orbitron', monospace;
-  font-size: 0.9rem;
-  color: var(--text);
-  margin: 0.2rem 0;
-}
-.mod-meta {
-  font-size: 0.7rem;
-  color: var(--muted);
-}
-
-.mod-arrow {
-  color: var(--muted);
-  font-size: 1.2rem;
-  transition: transform 0.3s;
-}
-.module.open .mod-arrow { transform: rotate(90deg); }
-
-.mod-lessons {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease;
-}
-.module.open .mod-lessons { max-height: 1000px; }
-
-.lesson-item {
-  padding: 0.8rem 1.2rem 0.8rem 4.5rem;
-  border-top: 1px solid rgba(255,255,255,0.04);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  transition: all 0.2s;
-}
-.lesson-item:hover { background: rgba(0,229,255,0.04); padding-left: 4.8rem; }
-
-.lesson-check {
-  width: 20px; height: 20px;
-  border-radius: 50%;
-  border: 2px solid var(--muted);
-  flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.6rem;
-  transition: all 0.2s;
-}
-.lesson-item.done .lesson-check {
-  background: var(--green);
-  border-color: var(--green);
-  color: var(--bg);
-}
-.lesson-name { flex: 1; font-size: 0.85rem; }
-.lesson-item.done .lesson-name { color: var(--muted); }
-.lesson-go { color: var(--cyan); font-size: 0.7rem; opacity: 0; transition: opacity 0.2s; }
-.lesson-item:hover .lesson-go { opacity: 1; }
-
-/* ===== LESSON VIEW ===== */
-.lesson-view {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 1.5rem 1.2rem 4rem;
-}
-
-.lesson-back {
-  background: none;
-  border: 1px solid var(--border);
-  color: var(--cyan);
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  cursor: pointer;
-  margin-bottom: 1.5rem;
-  transition: all 0.2s;
-}
-.lesson-back:hover { background: rgba(0,229,255,0.08); }
-
-.lesson-tag {
-  display: inline-block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--lesson-color, var(--cyan));
-  background: rgba(0,229,255,0.08);
-  border: 1px solid var(--lesson-color, rgba(0,229,255,0.2));
-  padding: 0.25rem 0.7rem;
-  border-radius: 20px;
-  margin-bottom: 1rem;
-}
-
-.lesson-view h1 {
-  font-family: 'Orbitron', monospace;
-  font-size: 1.5rem;
-  color: var(--lesson-color, var(--cyan));
-  line-height: 1.2;
-  margin-bottom: 1.5rem;
-  text-shadow: 0 0 30px rgba(0,229,255,0.2);
-}
-
-.lesson-content h2 {
-  font-family: 'Orbitron', monospace;
-  font-size: 1rem;
-  color: var(--text);
-  margin: 2rem 0 0.8rem;
-  padding-left: 0.8rem;
-  border-left: 3px solid var(--lesson-color, var(--cyan));
-}
-
-.lesson-content h3 {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--green);
-  margin: 1.5rem 0 0.5rem;
-}
-
-.lesson-content p {
-  font-size: 0.95rem;
-  color: #cbd5e1;
-  margin-bottom: 1rem;
-}
-
-.lesson-content ul, .lesson-content ol {
-  margin: 0 0 1rem 1.2rem;
-  color: #cbd5e1;
-  font-size: 0.92rem;
-}
-.lesson-content li { margin-bottom: 0.5rem; }
-
-.lesson-content strong { color: var(--cyan); font-weight: 700; }
-.lesson-content em { color: var(--yellow); font-style: normal; }
-
-.callout {
-  background: rgba(0,255,136,0.06);
-  border: 1px solid rgba(0,255,136,0.2);
-  border-radius: 8px;
-  padding: 1rem 1.2rem;
-  margin: 1.2rem 0;
-  font-size: 0.9rem;
-}
-.callout-title {
-  font-family: 'Orbitron', monospace;
-  font-size: 0.7rem;
-  color: var(--green);
-  letter-spacing: 0.1em;
-  margin-bottom: 0.5rem;
-}
-
-.callout.tip { background: rgba(255,214,0,0.06); border-color: rgba(255,214,0,0.2); }
-.callout.tip .callout-title { color: var(--yellow); }
-.callout.game { background: rgba(168,85,247,0.06); border-color: rgba(168,85,247,0.2); }
-.callout.game .callout-title { color: var(--purple); }
-
-pre {
-  background: var(--code-bg);
-  border: 1px solid rgba(0,229,255,0.15);
-  border-radius: 8px;
-  padding: 1rem;
-  overflow-x: auto;
-  margin: 1rem 0;
-  position: relative;
-}
-pre code {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.8rem;
-  color: #a5f3fc;
-  line-height: 1.6;
-}
-.code-label {
-  position: absolute;
-  top: 0; right: 0;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.55rem;
-  letter-spacing: 0.1em;
-  color: var(--muted);
-  background: rgba(0,229,255,0.1);
-  padding: 0.2rem 0.6rem;
-  border-radius: 0 8px 0 8px;
-  text-transform: uppercase;
-}
-code.inline {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.82rem;
-  background: rgba(0,229,255,0.1);
-  color: var(--cyan);
-  padding: 0.1rem 0.4rem;
-  border-radius: 4px;
-}
-
-.cmt { color: #4ade80; }
-.kw { color: #c084fc; }
-.str { color: #fbbf24; }
-.fn { color: #38bdf8; }
-
-.lesson-nav {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-top: 2.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--border);
-}
-
-.btn {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 0.7rem 1.3rem;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.btn-primary {
-  background: linear-gradient(135deg, var(--cyan), var(--cyan2));
-  color: var(--bg);
-  box-shadow: 0 0 20px rgba(0,229,255,0.25);
-}
-.btn-primary:hover { box-shadow: 0 0 30px rgba(0,229,255,0.4); transform: translateY(-1px); }
-.btn-done {
-  background: linear-gradient(135deg, var(--green), #00cc6a);
-  color: var(--bg);
-  width: 100%;
-  margin-top: 1.5rem;
-  padding: 0.9rem;
-  font-size: 0.9rem;
-}
-.btn-done.completed { background: rgba(0,255,136,0.15); color: var(--green); border: 1px solid var(--green); }
-.btn-secondary { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--text); }
-.btn-secondary:hover { background: rgba(255,255,255,0.08); }
-.btn-secondary:disabled { opacity: 0.3; cursor: not-allowed; }
-
-/* TOAST */
-.toast {
-  position: fixed;
-  bottom: 1.5rem;
-  left: 50%;
-  transform: translate(-50%, 100px);
-  background: var(--bg3);
-  border: 1px solid var(--green);
-  border-radius: 8px;
-  padding: 0.8rem 1.4rem;
-  font-size: 0.85rem;
-  color: var(--green);
-  z-index: 999;
-  opacity: 0;
-  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
-  font-family: 'JetBrains Mono', monospace;
-  box-shadow: 0 0 20px rgba(0,255,136,0.2);
-  white-space: nowrap;
-}
-.toast.show { transform: translate(-50%, 0); opacity: 1; }
-
-::-webkit-scrollbar { width: 5px; height: 5px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: rgba(0,229,255,0.2); border-radius: 3px; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--bg:#0a0e1a;--surface:#141a2e;--surface2:#1c2440;--primary:#5b8cff;--primary-glow:rgba(91,140,255,0.4);--accent:#ff6b9d;--gold:#ffc94d;--green:#3ddc97;--red:#ff5e7a;--text:#eef2ff;--muted:#7a85a8;--border:rgba(255,255,255,0.07)}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;min-height:100vh;overflow-x:hidden;padding-bottom:calc(env(safe-area-inset-bottom) + 80px);user-select:none;-webkit-user-select:none}
+body::before{content:'';position:fixed;width:500px;height:500px;background:radial-gradient(circle,rgba(91,140,255,0.08),transparent 70%);top:-150px;right:-150px;pointer-events:none;z-index:0}
+header{padding:calc(env(safe-area-inset-top) + 1rem) 1.2rem 0.6rem;position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:0.6rem}
+.brand-logo{font-family:'Black Han Sans',sans-serif;font-size:1.6rem;color:var(--primary)}
+.brand-text{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted)}
+.lang-switch{display:flex;gap:0.3rem;background:var(--surface);border:1px solid var(--border);border-radius:30px;padding:0.25rem}
+.lang-btn{background:none;border:none;color:var(--muted);font-family:'Outfit',sans-serif;font-weight:700;font-size:0.7rem;padding:0.35rem 0.6rem;border-radius:20px;cursor:pointer;transition:all 0.2s}
+.lang-btn.active{background:var(--primary);color:#fff}
+.goal-section{padding:0.5rem 1.2rem 1rem;position:relative;z-index:1}
+.goal-card{background:linear-gradient(135deg,var(--surface),var(--surface2));border:1px solid var(--border);border-radius:24px;padding:1.4rem;display:flex;align-items:center;gap:1.4rem}
+.ring{position:relative;width:80px;height:80px;flex-shrink:0}
+.ring svg{transform:rotate(-90deg)}
+.ring-text{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring-num{font-family:'Black Han Sans',sans-serif;font-size:1.3rem;color:var(--text);line-height:1}
+.ring-label{font-size:0.55rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em}
+.goal-info{flex:1}
+.goal-title{font-weight:700;font-size:1.05rem;margin-bottom:0.2rem}
+.goal-sub{font-size:0.8rem;color:var(--muted);line-height:1.4}
+.tabbar{position:fixed;bottom:0;left:0;right:0;z-index:50;background:rgba(10,14,26,0.92);backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;justify-content:space-around;padding:0.6rem 0.5rem calc(env(safe-area-inset-bottom) + 0.6rem)}
+.tab{background:none;border:none;color:var(--muted);font-family:'Outfit',sans-serif;font-size:0.65rem;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:0.25rem;cursor:pointer;transition:color 0.2s;flex:1}
+.tab .ic{font-size:1.3rem}
+.tab.active{color:var(--primary)}
+main{position:relative;z-index:1;padding:0 1.2rem;max-width:560px;margin:0 auto}
+.page{display:none;animation:fade 0.35s ease}
+.page.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.section-title{font-weight:700;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin:1.4rem 0 0.8rem}
+.lesson-grid{display:flex;flex-direction:column;gap:0.8rem}
+.lesson-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:1.2rem;display:flex;align-items:center;gap:1rem;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden}
+.lesson-card:active{transform:scale(0.98)}
+.lesson-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--lc,var(--primary))}
+.lc-emoji{font-size:1.8rem;width:52px;height:52px;border-radius:16px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--lcbg,rgba(91,140,255,0.12))}
+.lc-info{flex:1;min-width:0}
+.lc-title{font-weight:700;font-size:1rem}
+.lc-sub{font-size:0.78rem;color:var(--muted);margin-top:0.1rem}
+.lc-progress{margin-top:0.5rem;height:4px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden}
+.lc-fill{height:100%;background:var(--lc,var(--primary));border-radius:2px;transition:width 0.5s}
+.lc-arrow{color:var(--muted);font-size:1.1rem}
+.study-wrap{padding-top:1rem}
+.study-top{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem}
+.study-back{background:var(--surface);border:1px solid var(--border);color:var(--text);width:40px;height:40px;border-radius:12px;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.study-bar{flex:1;height:8px;background:var(--surface);border-radius:4px;overflow:hidden}
+.study-bar-fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:4px;transition:width 0.4s}
+.study-count{font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--muted)}
+.word-card{background:linear-gradient(160deg,var(--surface),var(--surface2));border:1px solid var(--border);border-radius:28px;padding:2.5rem 1.5rem;text-align:center;margin-bottom:1.2rem;min-height:240px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative}
+.audio-btn{position:absolute;top:1.2rem;right:1.2rem;width:46px;height:46px;border-radius:50%;border:none;cursor:pointer;background:rgba(91,140,255,0.15);color:var(--primary);font-size:1.3rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
+.audio-btn:active{transform:scale(0.9);background:rgba(91,140,255,0.3)}
+.audio-btn.playing{animation:pulse 0.6s ease infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+.word-hangul{font-family:'Black Han Sans',sans-serif;font-size:3.5rem;color:var(--text);line-height:1.1;margin-bottom:0.6rem}
+.word-hangul.small{font-size:2.2rem}
+.word-roman{font-family:'JetBrains Mono',monospace;font-size:1rem;color:var(--primary);margin-bottom:0.8rem}
+.word-english{font-size:1.4rem;font-weight:600;color:var(--green)}
+.tap-hint{font-size:0.75rem;color:var(--muted);margin-top:1rem}
+.options{display:flex;flex-direction:column;gap:0.7rem;margin-bottom:1rem}
+.option{background:var(--surface);border:2px solid var(--border);border-radius:16px;padding:1rem 1.2rem;font-family:'Outfit',sans-serif;font-size:1.05rem;font-weight:500;color:var(--text);cursor:pointer;text-align:left;transition:all 0.15s}
+.option:active{transform:scale(0.99)}
+.option.correct{border-color:var(--green);background:rgba(61,220,151,0.12);color:var(--green)}
+.option.wrong{border-color:var(--red);background:rgba(255,94,122,0.12);color:var(--red)}
+.option:disabled{cursor:default}
+.recall-row{display:flex;gap:0.7rem;margin-bottom:1rem}
+.btn{font-family:'Outfit',sans-serif;font-weight:700;font-size:0.95rem;padding:1rem;border-radius:16px;border:none;cursor:pointer;transition:all 0.2s;flex:1}
+.btn:active{transform:scale(0.97)}
+.btn-primary{background:var(--primary);color:#fff;box-shadow:0 4px 20px var(--primary-glow)}
+.btn-hard{background:rgba(255,94,122,0.15);color:var(--red);border:1px solid rgba(255,94,122,0.3)}
+.btn-easy{background:rgba(61,220,151,0.15);color:var(--green);border:1px solid rgba(61,220,151,0.3)}
+.btn-full{width:100%;margin-bottom:0.7rem}
+.sentence-target{background:var(--surface);border:1px dashed var(--border);border-radius:16px;padding:1.2rem;min-height:70px;margin-bottom:0.5rem;display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center}
+.sentence-english{text-align:center;font-size:1.1rem;color:var(--muted);margin-bottom:1rem}
+.chip{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:0.6rem 1rem;font-family:'Black Han Sans',sans-serif;font-size:1.1rem;cursor:pointer;transition:all 0.15s;color:var(--text)}
+.chip:active{transform:scale(0.95)}
+.chip.placed{opacity:0.3;pointer-events:none}
+.chip-bank{display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;margin-bottom:1.2rem}
+.slot{background:rgba(91,140,255,0.12);border:1px solid var(--primary);border-radius:12px;padding:0.6rem 1rem;font-family:'Black Han Sans',sans-serif;font-size:1.1rem;cursor:pointer}
+.feedback{border-radius:16px;padding:1rem 1.2rem;margin-bottom:1rem;font-size:0.92rem;line-height:1.5;display:none}
+.feedback.show{display:block;animation:fade 0.3s ease}
+.feedback.good{background:rgba(61,220,151,0.1);border:1px solid rgba(61,220,151,0.25);color:var(--green)}
+.feedback.bad{background:rgba(255,94,122,0.1);border:1px solid rgba(255,94,122,0.25);color:#ff9db0}
+.complete{text-align:center;padding:3rem 1rem}
+.complete-emoji{font-size:4rem;margin-bottom:1rem}
+.complete-title{font-family:'Black Han Sans',sans-serif;font-size:1.8rem;color:var(--primary);margin-bottom:0.5rem}
+.complete-stats{display:flex;gap:1rem;justify-content:center;margin:1.5rem 0}
+.cstat{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1rem 1.4rem}
+.cstat-num{font-family:'Black Han Sans',sans-serif;font-size:1.8rem;color:var(--gold)}
+.cstat-label{font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em}
+.stat-cards{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-bottom:1rem}
+.stat-c{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:1.3rem;text-align:center}
+.stat-c .n{font-family:'Black Han Sans',sans-serif;font-size:2rem;color:var(--scc,var(--primary))}
+.stat-c .l{font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-top:0.2rem}
+.word-list{display:flex;flex-direction:column;gap:0.5rem}
+.wl-item{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:0.8rem 1rem;display:flex;align-items:center;gap:0.8rem}
+.wl-hangul{font-family:'Black Han Sans',sans-serif;font-size:1.3rem;color:var(--primary);min-width:60px}
+.wl-mid{flex:1}
+.wl-eng{font-weight:600;font-size:0.9rem}
+.wl-rom{font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--muted)}
+.wl-audio{background:none;border:none;color:var(--primary);font-size:1.1rem;cursor:pointer}
+.toast{position:fixed;bottom:100px;left:50%;transform:translate(-50%,120px);background:var(--surface2);border:1px solid var(--green);border-radius:14px;padding:0.8rem 1.4rem;font-size:0.9rem;color:var(--green);z-index:999;opacity:0;transition:all 0.3s;font-weight:600;box-shadow:0 4px 30px rgba(0,0,0,0.4);white-space:nowrap}
+.toast.show{transform:translate(-50%,0);opacity:1}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-thumb{background:rgba(91,140,255,0.3);border-radius:3px}
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="logo" onclick="goHome()">DATA<span>QUEST</span> ACADEMY</div>
-  <div class="progress-mini" id="progress-mini">0%</div>
-</nav>
+<header>
+  <div class="brand"><span class="brand-logo">한글</span><span class="brand-text" id="brand-text">Learn Korean</span></div>
+  <div class="lang-switch">
+    <button class="lang-btn active" id="lang-en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" id="lang-ru" onclick="setLang('ru')">RU</button>
+    <button class="lang-btn" id="lang-uz" onclick="setLang('uz')">UZ</button>
+  </div>
+</header>
 
 <main>
-
-<!-- HOME / CURRICULUM -->
-<div class="view active" id="view-home">
-  <div class="hero">
-    <span class="hero-badge">⚡ Zero to Professional</span>
-    <h1>Learn Data Science<br>From Absolute Zero</h1>
-    <p>No experience needed. Every lesson teaches you step by step — all the way to becoming a Game Analytics Data Scientist 🎮</p>
+<div class="page active" id="page-home">
+  <div class="goal-section">
+    <div class="goal-card">
+      <div class="ring">
+        <svg width="80" height="80">
+          <circle cx="40" cy="40" r="34" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="7"/>
+          <circle id="ring-fill" cx="40" cy="40" r="34" fill="none" stroke="url(#grad)" stroke-width="7" stroke-linecap="round" stroke-dasharray="213.6" stroke-dashoffset="213.6"/>
+          <defs><linearGradient id="grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#5b8cff"/><stop offset="100%" stop-color="#ff6b9d"/></linearGradient></defs>
+        </svg>
+        <div class="ring-text"><span class="ring-num" id="ring-num">0</span><span class="ring-label" id="ring-label">today</span></div>
+      </div>
+      <div class="goal-info">
+        <div class="goal-title" id="goal-title">Today's Progress 🎯</div>
+        <div class="goal-sub" id="goal-sub"></div>
+      </div>
+    </div>
   </div>
-
-  <div class="overall-progress">
-    <div class="op-bar"><div class="op-fill" id="op-fill" style="width:0%"></div></div>
-    <div class="op-text" id="op-text">0 of 0 lessons complete</div>
+  <div id="audio-note" style="display:none;background:rgba(255,201,77,0.08);border:1px solid rgba(255,201,77,0.3);border-radius:16px;padding:1rem;margin-bottom:0.5rem">
+    <div style="font-weight:700;color:var(--gold);font-size:0.85rem;margin-bottom:0.3rem" id="an-title">🔊 Turn on Korean audio</div>
+    <div style="font-size:0.78rem;color:var(--muted);line-height:1.5" id="an-body"></div>
+    <button id="an-btn" onclick="this.parentElement.style.display='none';localStorage.setItem('kr_audionote','1')" style="margin-top:0.6rem;background:rgba(255,201,77,0.15);border:1px solid rgba(255,201,77,0.3);color:var(--gold);border-radius:10px;padding:0.4rem 0.9rem;font-size:0.75rem;font-weight:600;cursor:pointer">OK</button>
   </div>
-
-  <div class="modules" id="modules-container"></div>
+  <div class="section-title" id="st-lessons">Choose a Lesson</div>
+  <div class="lesson-grid" id="lesson-grid"></div>
 </div>
 
-<!-- LESSON -->
-<div class="view" id="view-lesson">
-  <div class="lesson-view" id="lesson-view"></div>
+<div class="page" id="page-study"><div class="study-wrap" id="study-wrap"></div></div>
+
+<div class="page" id="page-review">
+  <div id="review-home"></div>
+  <div class="study-wrap" id="review-wrap" style="display:none"></div>
 </div>
 
+<div class="page" id="page-progress">
+  <div class="section-title" id="st-stats" style="margin-top:1.5rem">Your Stats</div>
+  <div class="stat-cards">
+    <div class="stat-c" style="--scc:var(--primary)"><span class="n" id="ps-learned">0</span><span class="l" id="psl-learned">Learned</span></div>
+    <div class="stat-c" style="--scc:var(--gold)"><span class="n" id="ps-streak">0</span><span class="l" id="psl-streak">Streak</span></div>
+    <div class="stat-c" style="--scc:var(--green)"><span class="n" id="ps-mastered">0</span><span class="l" id="psl-mastered">Mastered</span></div>
+    <div class="stat-c" style="--scc:var(--accent)"><span class="n" id="ps-total">0</span><span class="l" id="psl-xp">Total XP</span></div>
+  </div>
+  <div class="section-title" id="st-learning">Words You're Learning</div>
+  <div class="word-list" id="word-list"></div>
+</div>
 </main>
+
+<div class="tabbar">
+  <button class="tab active" onclick="nav('home',this)"><span class="ic">🏠</span><span id="tab-learn">Learn</span></button>
+  <button class="tab" onclick="nav('review',this)"><span class="ic">🔄</span><span id="tab-review">Review</span></button>
+  <button class="tab" onclick="nav('progress',this)"><span class="ic">📊</span><span id="tab-stats">Stats</span></button>
+</div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-// ===== LESSON CONTENT =====
-const curriculum = [
-  {
-    title: "What is Data Science?",
-    icon: "🌟", color: "#00e5ff", bg: "rgba(0,229,255,0.1)",
-    desc: "Start here — understand the field before anything else",
-    lessons: [
-      {
-        title: "What Even Is a Data Scientist?",
-        body: `
-<p>Let's start with the simplest possible explanation. A <strong>data scientist</strong> is someone who looks at large amounts of information (data) and finds useful answers hidden inside it.</p>
-<p>Think about a game like Mobile Legends. Every time millions of players tap, buy a skin, win, or quit — that creates <em>data</em>. A data scientist's job is to study that data and answer questions like:</p>
-<ul>
-<li>Why do players quit after level 10?</li>
-<li>Which heroes make players spend money?</li>
-<li>What time of day do most people play?</li>
-</ul>
-<h2>The Simple Definition</h2>
-<p>A data scientist turns <strong>raw data</strong> into <strong>decisions</strong>. That's the whole job in one sentence.</p>
-<div class="callout">
-<div class="callout-title">🎯 REAL EXAMPLE</div>
-A game company notices players quit a lot. The data scientist studies the data and discovers level 7 is way too hard. The company makes it easier — and player retention jumps 20%. That decision was worth millions. <strong>That's the power of data science.</strong>
-</div>
-<h2>What Makes It Different From Other Jobs?</h2>
-<p>A regular analyst might make a chart. A data scientist goes further — they <strong>predict the future</strong> using math and code. For example, predicting <em>which</em> players are about to quit <em>before</em> they actually do.</p>
-<div class="callout game">
-<div class="callout-title">🎮 YOUR ADVANTAGE</div>
-Because you love games, you already understand player behavior from the inside. That intuition is something most data scientists don't have — it's your secret weapon for game analytics.
-</div>`
-      },
-      {
-        title: "What Does a Data Scientist Do All Day?",
-        body: `
-<p>People imagine data scientists doing complex AI all day. The reality is more down-to-earth. Here's how the time actually splits:</p>
-<h2>The Real Breakdown</h2>
-<ul>
-<li><strong>~60% Cleaning data</strong> — Real data is messy. Missing values, typos, duplicates. Most of the job is fixing this before any analysis.</li>
-<li><strong>~20% Exploring & analyzing</strong> — Making charts, finding patterns, asking questions.</li>
-<li><strong>~10% Building models</strong> — The "machine learning" part everyone talks about.</li>
-<li><strong>~10% Communicating</strong> — Explaining findings to bosses who don't know code.</li>
-</ul>
-<div class="callout tip">
-<div class="callout-title">💡 HONEST TRUTH</div>
-The "boring" 60% (cleaning data) is where beginners give up. But it's also where you build real skill. Push through it — everyone struggles here at first.
-</div>
-<h2>A Typical Task</h2>
-<p>Imagine your boss asks: <em>"Are players who use voice chat more likely to keep playing?"</em></p>
-<ol>
-<li>You pull the data (who used voice chat, who kept playing)</li>
-<li>You clean it (remove broken records)</li>
-<li>You analyze it (compare the two groups)</li>
-<li>You answer: "Yes, voice chat users stay 3x longer"</li>
-<li>The company invests more in voice features</li>
-</ol>
-<p>That's a full data science cycle. Simple, powerful, valuable.</p>`
-      },
-      {
-        title: "The Skills You'll Need (Roadmap Overview)",
-        body: `
-<p>Here's everything you'll learn in this academy, in order. Don't worry — we teach each one step by step.</p>
-<h2>The 4 Core Skills</h2>
-<h3>1. Python 🐍</h3>
-<p>A programming language that's easy to read. It's how you tell the computer what to do with data. <strong>The most important tool.</strong></p>
-<h3>2. Statistics 📊</h3>
-<p>The math of understanding data — averages, patterns, probability. Don't panic, we keep it practical.</p>
-<h3>3. SQL 🗄️</h3>
-<p>The language for pulling data out of databases. Almost every company stores data in databases, so this is essential.</p>
-<h3>4. Machine Learning 🤖</h3>
-<p>Teaching computers to make predictions. This is the advanced, exciting part — and we build up to it slowly.</p>
-<div class="callout">
-<div class="callout-title">🗺️ YOUR PATH</div>
-Foundations → Python → Statistics → SQL → Machine Learning → Game Analytics → Job Ready. Each module builds on the last. Just go one lesson at a time.
-</div>
-<div class="callout tip">
-<div class="callout-title">💡 DON'T RUSH</div>
-You can't learn all of this in a week, and that's okay. Consistency beats speed. One lesson a day for a few months will take you further than cramming.
-</div>`
-      }
-    ]
-  },
-  {
-    title: "Python Basics",
-    icon: "🐍", color: "#00ff88", bg: "rgba(0,255,136,0.1)",
-    desc: "The #1 tool of every data scientist",
-    lessons: [
-      {
-        title: "Why Python? And Your First Code",
-        body: `
-<p><strong>Python</strong> is a programming language. A language is just a way to give instructions to a computer. Python is famous for being <em>readable</em> — it almost looks like English.</p>
-<h2>Why Data Scientists Love Python</h2>
-<ul>
-<li>Easy to learn (great for beginners like you)</li>
-<li>Huge collection of free tools for data</li>
-<li>Used by Google, Netflix, every game studio</li>
-</ul>
-<h2>Your Very First Code</h2>
-<p>This line tells the computer to display a message:</p>
-<pre><span class="code-label">Python</span><code><span class="fn">print</span>(<span class="str">"Hello, I'm learning data science!"</span>)</code></pre>
-<p>When you run that, the computer shows:</p>
-<pre><code>Hello, I'm learning data science!</code></pre>
-<p>That's it. <code class="inline">print()</code> means "show this on screen." The text inside the quotes is what gets shown.</p>
-<div class="callout tip">
-<div class="callout-title">💡 WHERE TO PRACTICE</div>
-You don't need to install anything yet. Go to <strong>replit.com</strong> or <strong>Google Colab</strong> — both let you write and run Python in your browser, even on your phone.
-</div>`
-      },
-      {
-        title: "Variables — Storing Information",
-        body: `
-<p>A <strong>variable</strong> is like a labeled box where you store a piece of information so you can use it later.</p>
-<h2>Creating Variables</h2>
-<pre><span class="code-label">Python</span><code><span class="cmt"># Storing a player's info</span>
-player_name = <span class="str">"Samandar"</span>
-player_level = <span class="kw">42</span>
-is_online = <span class="kw">True</span></code></pre>
-<p>Now you can use them anywhere:</p>
-<pre><span class="code-label">Python</span><code><span class="fn">print</span>(player_name)   <span class="cmt"># shows: Samandar</span>
-<span class="fn">print</span>(player_level)  <span class="cmt"># shows: 42</span></code></pre>
-<h2>The 3 Main Types You'll Use</h2>
-<ul>
-<li><strong>Text (string)</strong> — words, always in quotes: <code class="inline">"Mobile Legends"</code></li>
-<li><strong>Number (int/float)</strong> — like <code class="inline">42</code> or <code class="inline">9.99</code></li>
-<li><strong>True/False (boolean)</strong> — yes or no values: <code class="inline">True</code></li>
-</ul>
-<div class="callout game">
-<div class="callout-title">🎮 GAME EXAMPLE</div>
-A game stores every player as variables: their name, level, coins, wins. When you analyze game data, you're working with millions of these stored values.
-</div>`
-      },
-      {
-        title: "Lists & Loops — Handling Lots of Data",
-        body: `
-<p>Data science means dealing with <em>thousands</em> of values, not just one. That's where <strong>lists</strong> and <strong>loops</strong> come in.</p>
-<h2>Lists — Many Values in One Box</h2>
-<pre><span class="code-label">Python</span><code><span class="cmt"># Scores from 5 matches</span>
-scores = [<span class="kw">12</span>, <span class="kw">8</span>, <span class="kw">15</span>, <span class="kw">20</span>, <span class="kw">5</span>]</code></pre>
-<h2>Loops — Doing Something to Each Item</h2>
-<p>A <strong>loop</strong> repeats an action for every item. Instead of writing code 5 times, you write it once:</p>
-<pre><span class="code-label">Python</span><code><span class="kw">for</span> score <span class="kw">in</span> scores:
-    <span class="fn">print</span>(score)
+// ============ UI TRANSLATIONS ============
+const UI = {
+  en:{brand:'Learn Korean',goalTitle:"Today's Progress 🎯",today:'today',lessons:'Choose a Lesson',stats:'Your Stats',learning:"Words You're Learning",learn:'Learn',statsTab:'Stats',learned:'Learned',streak:'Streak',mastered:'Mastered',xp:'Total XP',
+    gotit:'Got it →',stillLearning:'Still Learning',gotItCheck:'Got It ✓',whatMeans:'What does this mean?',correct:'✓ Correct! Nice one.',notQuite:'Not quite — it means',seeSoon:". You'll see it again soon.",remember:'🤔 Do you remember? Tap to reveal',forgot:'Forgot 😕',knewIt:'Knew it ✓',tapFlip:'🔊 Tap to hear it again',build:'Build',tapOrder:'Tap words below in order...',checkAns:'Check Answer',perfect:'✓ Perfect! Correct word order.',close:'Close! Correct:',sessionDone:'Session Complete!',greatWork:'Great work on',correctLabel:'Correct',newWords:'New Words',streakLabel:'Streak',studyAgain:'Study Again 🔄',backHome:'Back Home',startLesson:'Start a lesson to begin learning words! 🌱',
+    anTitle:'🔊 Turn on Korean audio',anBody:'Tap a 🔊 button and hear nothing? Your device needs a Korean voice. On iPhone: Settings → Accessibility → Spoken Content → Voices → Korean → download. Then audio works everywhere here.',
+    goal0:'Learn as much as you want. Every word counts!',goalLow:'words today. Warming up! 🔥',goalHigh:'words today. On fire! 🚀',
+    review:'Review',reviewTitle:'Smart Review 🔄',reviewSub:'Practice the words you find hardest. Based on your progress.',reviewStart:'Start Review',reviewNone:'No words to review yet! Learn some words first, then come back. 🌱',reviewReady:'words ready to review',reviewMastered:'All caught up! Nothing weak to review right now. 🎉',reviewDone:'Review Complete!',reviewImproved:'words improved'},
+  ru:{brand:'Учить корейский',goalTitle:'Прогресс сегодня 🎯',today:'сегодня',lessons:'Выберите урок',stats:'Статистика',learning:'Изучаемые слова',learn:'Учить',statsTab:'Статы',learned:'Выучено',streak:'Серия',mastered:'Освоено',xp:'Очки XP',
+    gotit:'Понятно →',stillLearning:'Ещё учу',gotItCheck:'Знаю ✓',whatMeans:'Что это значит?',correct:'✓ Верно! Отлично.',notQuite:'Не совсем — это значит',seeSoon:'. Скоро повторим.',remember:'🤔 Помните? Нажмите, чтобы открыть',forgot:'Забыл 😕',knewIt:'Знал ✓',tapFlip:'🔊 Нажмите, чтобы услышать снова',build:'Составьте',tapOrder:'Нажимайте слова по порядку...',checkAns:'Проверить',perfect:'✓ Отлично! Верный порядок слов.',close:'Почти! Верно:',sessionDone:'Урок завершён!',greatWork:'Отличная работа:',correctLabel:'Верно',newWords:'Новые слова',streakLabel:'Серия',studyAgain:'Ещё раз 🔄',backHome:'На главную',startLesson:'Начните урок, чтобы учить слова! 🌱',
+    anTitle:'🔊 Включите корейское озвучивание',anBody:'Нажали 🔊 и тишина? Нужен корейский голос. На iPhone: Настройки → Универсальный доступ → Устный контент → Голоса → Корейский → загрузить. Потом звук заработает везде.',
+    goal0:'Учите сколько хотите. Каждое слово важно!',goalLow:'слов сегодня. Разогрев! 🔥',goalHigh:'слов сегодня. В огне! 🚀',
+    review:'Повтор',reviewTitle:'Умный повтор 🔄',reviewSub:'Тренируйте самые трудные слова. На основе вашего прогресса.',reviewStart:'Начать повтор',reviewNone:'Пока нечего повторять! Сначала выучите слова, потом возвращайтесь. 🌱',reviewReady:'слов готово к повтору',reviewMastered:'Всё повторено! Сейчас нет слабых слов. 🎉',reviewDone:'Повтор завершён!',reviewImproved:'слов улучшено'},
+  uz:{brand:"Koreys tilini o'rganish",goalTitle:'Bugungi natija 🎯',today:'bugun',lessons:'Darsni tanlang',stats:'Statistika',learning:"O'rganilayotgan so'zlar",learn:"O'rganish",statsTab:'Statistika',learned:"O'rganildi",streak:'Ketma-ketlik',mastered:'Mukammal',xp:'Jami XP',
+    gotit:'Tushunarli →',stillLearning:"Hali o'rganyapman",gotItCheck:'Bilaman ✓',whatMeans:"Bu nimani anglatadi?",correct:"✓ To'g'ri! Zo'r.",notQuite:"Unchalik emas — bu",seeSoon:". Yana ko'rasiz.",remember:"🤔 Eslaysizmi? Ochish uchun bosing",forgot:'Unutdim 😕',knewIt:'Bildim ✓',tapFlip:"🔊 Yana eshitish uchun bosing",build:'Tuzing',tapOrder:"So'zlarni tartib bilan bosing...",checkAns:'Tekshirish',perfect:"✓ Mukammal! To'g'ri tartib.",close:"Yaqin! To'g'risi:",sessionDone:'Dars tugadi!',greatWork:'Zo\'r ish:',correctLabel:"To'g'ri",newWords:"Yangi so'zlar",streakLabel:'Ketma-ketlik',studyAgain:'Yana 🔄',backHome:'Bosh sahifa',startLesson:"So'zlarni o'rganish uchun darsni boshlang! 🌱",
+    anTitle:"🔊 Koreyscha ovozni yoqing",anBody:"🔊 ni bosib hech narsa eshitilmadimi? Qurilmangizga koreyscha ovoz kerak. iPhone'da: Sozlamalar → Maxsus imkoniyatlar → Spoken Content → Voices → Korean → yuklab oling. Keyin ovoz hamma joyda ishlaydi.",
+    goal0:"Xohlaganingizcha o'rganing. Har bir so'z muhim!",goalLow:"so'z bugun. Qizib boshlandi! 🔥",goalHigh:"so'z bugun. Olovdasiz! 🚀",
+    review:'Takror',reviewTitle:'Aqlli takror 🔄',reviewSub:"Eng qiyin so'zlarni mashq qiling. Natijangizga asoslangan.",reviewStart:'Takrorni boshlash',reviewNone:"Hali takrorlash uchun so'z yo'q! Avval so'z o'rganing, keyin qayting. 🌱",reviewReady:"so'z takrorga tayyor",reviewMastered:"Hammasi takrorlandi! Hozir zaif so'z yo'q. 🎉",reviewDone:'Takror tugadi!',reviewImproved:"so'z yaxshilandi"}
+};
 
-<span class="cmt"># shows each score: 12, 8, 15, 20, 5</span></code></pre>
-<h2>A Useful Real Example</h2>
-<p>Let's find the total score across all matches:</p>
-<pre><span class="code-label">Python</span><code>total = <span class="fn">sum</span>(scores)
-<span class="fn">print</span>(total)  <span class="cmt"># shows: 60</span>
+let LANG = localStorage.getItem('kr_lang') || 'en';
+function t(){return UI[LANG];}
 
-average = total / <span class="fn">len</span>(scores)
-<span class="fn">print</span>(average)  <span class="cmt"># shows: 12.0</span></code></pre>
-<div class="callout">
-<div class="callout-title">🎯 YOU JUST DID DATA SCIENCE</div>
-Calculating an average from a list of values is literally a basic data science operation. Imagine doing this for 10 million players — that's the real job, just bigger.
-</div>`
-      }
-    ]
-  },
-  {
-    title: "Statistics Made Simple",
-    icon: "📊", color: "#ff6b35", bg: "rgba(255,107,53,0.1)",
-    desc: "The math behind understanding data (kept easy)",
-    lessons: [
-      {
-        title: "Mean, Median & Mode — The Basics",
-        body: `
-<p>Statistics sounds scary but the core ideas are simple. These three describe the "middle" of your data.</p>
-<h2>Mean (Average)</h2>
-<p>Add everything up, divide by how many. If players scored 10, 20, 30: mean = (10+20+30)/3 = <strong>20</strong>.</p>
-<h2>Median (Middle Value)</h2>
-<p>Line up the numbers, pick the one in the middle. For 10, 20, 30 → median is <strong>20</strong>.</p>
-<div class="callout tip">
-<div class="callout-title">💡 WHY MEDIAN MATTERS</div>
-Imagine 4 players spend $1 and one player spends $1000. The <em>mean</em> says everyone spends ~$200 (misleading!). The <em>median</em> says $1 (the truth for most players). Knowing which to use is a real skill.
-</div>
-<h2>Mode (Most Common)</h2>
-<p>The value that appears most often. If most players are level 5, the mode is <strong>5</strong>.</p>
-<h2>In Python</h2>
-<pre><span class="code-label">Python</span><code><span class="kw">import</span> statistics
-
-scores = [<span class="kw">10</span>, <span class="kw">20</span>, <span class="kw">20</span>, <span class="kw">30</span>, <span class="kw">40</span>]
-<span class="fn">print</span>(statistics.<span class="fn">mean</span>(scores))    <span class="cmt"># 24</span>
-<span class="fn">print</span>(statistics.<span class="fn">median</span>(scores))  <span class="cmt"># 20</span>
-<span class="fn">print</span>(statistics.<span class="fn">mode</span>(scores))    <span class="cmt"># 20</span></code></pre>`
-      },
-      {
-        title: "Understanding Patterns & Correlation",
-        body: `
-<p><strong>Correlation</strong> means two things change together. Spotting these relationships is a huge part of data science.</p>
-<h2>Simple Examples</h2>
-<ul>
-<li>More playtime → more coins earned (positive correlation)</li>
-<li>Higher difficulty → more players quit (positive correlation)</li>
-<li>More tutorials completed → fewer players quit (negative correlation)</li>
-</ul>
-<div class="callout">
-<div class="callout-title">⚠️ CRITICAL RULE</div>
-<strong>Correlation is NOT causation.</strong> Ice cream sales and drowning both go up in summer — but ice cream doesn't cause drowning. The summer heat causes both. Always ask "what's the real cause?"
-</div>
-<h2>Why This Matters for Games</h2>
-<p>If you find players who join a guild stay 5x longer, that's a correlation worth millions. The studio might push guild features hard. But you must check: do guilds <em>cause</em> loyalty, or do loyal players just happen to join guilds? That question is your job.</p>
-<div class="callout game">
-<div class="callout-title">🎮 THINK LIKE THIS</div>
-Every pattern you find leads to a business decision. The better you understand cause vs coincidence, the more valuable you become.
-</div>`
-      }
-    ]
-  },
-  {
-    title: "SQL — Talking to Databases",
-    icon: "🗄️", color: "#ffd600", bg: "rgba(255,214,0,0.1)",
-    desc: "Pull data out of company databases",
-    lessons: [
-      {
-        title: "What is a Database & Why SQL?",
-        body: `
-<p>A <strong>database</strong> is where companies store huge amounts of organized data — like a giant smart spreadsheet. <strong>SQL</strong> (say "sequel") is the language you use to ask it questions.</p>
-<h2>Picture a Table</h2>
-<p>Imagine a "players" table:</p>
-<pre><code>id | name      | level | coins
-1  | Samandar  | 42    | 500
-2  | Alex      | 17    | 120
-3  | Maria     | 88    | 2000</code></pre>
-<h2>Your First Query</h2>
-<p>To get everything from the table:</p>
-<pre><span class="code-label">SQL</span><code><span class="kw">SELECT</span> * <span class="kw">FROM</span> players;</code></pre>
-<p>The <code class="inline">*</code> means "all columns." This shows the whole table.</p>
-<h2>Getting Specific Columns</h2>
-<pre><span class="code-label">SQL</span><code><span class="kw">SELECT</span> name, level <span class="kw">FROM</span> players;</code></pre>
-<p>This shows only names and levels. SQL is just asking precise questions about data.</p>
-<div class="callout tip">
-<div class="callout-title">💡 PRACTICE FREE</div>
-Go to <strong>sqlzoo.net</strong> or <strong>w3schools.com/sql</strong> — both let you run real SQL in your browser. No setup needed.
-</div>`
-      },
-      {
-        title: "Filtering & Sorting Data",
-        body: `
-<p>The real power of SQL is asking <em>specific</em> questions. Let's filter and sort.</p>
-<h2>WHERE — Filtering Rows</h2>
-<p>Find only high-level players:</p>
-<pre><span class="code-label">SQL</span><code><span class="kw">SELECT</span> name, level
-<span class="kw">FROM</span> players
-<span class="kw">WHERE</span> level > <span class="kw">40</span>;</code></pre>
-<p>This shows only players above level 40.</p>
-<h2>ORDER BY — Sorting</h2>
-<p>Sort players by coins, richest first:</p>
-<pre><span class="code-label">SQL</span><code><span class="kw">SELECT</span> name, coins
-<span class="kw">FROM</span> players
-<span class="kw">ORDER BY</span> coins <span class="kw">DESC</span>;</code></pre>
-<p><code class="inline">DESC</code> means descending (high to low). Use <code class="inline">ASC</code> for low to high.</p>
-<h2>Combining Them</h2>
-<pre><span class="code-label">SQL</span><code><span class="kw">SELECT</span> name, coins
-<span class="kw">FROM</span> players
-<span class="kw">WHERE</span> level > <span class="kw">20</span>
-<span class="kw">ORDER BY</span> coins <span class="kw">DESC</span>;</code></pre>
-<div class="callout game">
-<div class="callout-title">🎮 REAL JOB TASK</div>
-"Show me our top 100 spenders who are still active" is a real request you'd get at a game company. That's just a SELECT with WHERE and ORDER BY. You're already learning the real work.
-</div>`
-      }
-    ]
-  },
-  {
-    title: "Machine Learning Intro",
-    icon: "🤖", color: "#a855f7", bg: "rgba(168,85,247,0.1)",
-    desc: "Teaching computers to predict the future",
-    lessons: [
-      {
-        title: "What is Machine Learning, Really?",
-        body: `
-<p><strong>Machine learning (ML)</strong> is teaching a computer to learn patterns from data, so it can make predictions about <em>new</em> data it hasn't seen.</p>
-<h2>The Simplest Explanation</h2>
-<p>Imagine showing a computer 10,000 players who quit and 10,000 who stayed, along with their behavior. The computer learns the patterns. Then for a <em>new</em> player, it can predict: "this one will probably quit soon."</p>
-<div class="callout">
-<div class="callout-title">🎯 THE BIG IDEA</div>
-Normal code: you write exact rules. Machine learning: you show examples, and the computer figures out the rules itself. That's the revolution.
-</div>
-<h2>Two Main Types</h2>
-<h3>1. Supervised Learning</h3>
-<p>You give the computer examples <em>with answers</em>. "Here are players who quit (answer: quit) and who stayed (answer: stayed)." It learns to predict the answer for new cases. <strong>This is the most common type.</strong></p>
-<h3>2. Unsupervised Learning</h3>
-<p>You give data <em>without</em> answers and ask the computer to find hidden groups. Example: "Group these players into types" — it might discover casual players, hardcore players, and spenders on its own.</p>
-<div class="callout game">
-<div class="callout-title">🎮 GAME USES</div>
-Predicting churn, recommending which skin a player will buy, detecting cheaters, matchmaking fair teams — all powered by ML. This is where game analytics gets exciting.
-</div>`
-      },
-      {
-        title: "Your First Mental Model of a Prediction",
-        body: `
-<p>Let's make ML concrete without heavy math. We'll predict if a player will quit.</p>
-<h2>Step 1: Gather Features</h2>
-<p><strong>Features</strong> are the clues the computer uses. For predicting churn:</p>
-<ul>
-<li>Days since last login</li>
-<li>Total playtime</li>
-<li>Number of friends in game</li>
-<li>Matches lost in a row</li>
-</ul>
-<h2>Step 2: The Pattern</h2>
-<p>The model might learn: "Players with 7+ days since login AND 5+ losses in a row usually quit." It finds this <em>automatically</em> from the data.</p>
-<h2>Step 3: Predict</h2>
-<p>For a new player, it outputs something like: <code class="inline">85% chance of quitting</code>. The studio can then send that player a reward to keep them.</p>
-<h2>A Tiny Code Peek</h2>
-<p>You don't need to understand this fully yet — just see how short it is:</p>
-<pre><span class="code-label">Python</span><code><span class="kw">from</span> sklearn.tree <span class="kw">import</span> DecisionTreeClassifier
-
-model = <span class="fn">DecisionTreeClassifier</span>()
-model.<span class="fn">fit</span>(features, answers)   <span class="cmt"># learn patterns</span>
-prediction = model.<span class="fn">predict</span>(new_player)  <span class="cmt"># predict!</span></code></pre>
-<div class="callout tip">
-<div class="callout-title">💡 DON'T MEMORIZE THIS</div>
-At this stage, just understand the <em>idea</em>: feed examples → model learns → make predictions. The exact code comes naturally with practice later.
-</div>`
-      }
-    ]
-  },
-  {
-    title: "Game Analytics Specialty",
-    icon: "🎮", color: "#a855f7", bg: "rgba(168,85,247,0.12)",
-    desc: "Your specialization — the dream career",
-    lessons: [
-      {
-        title: "The Key Metrics Every Game Tracks",
-        body: `
-<p>Game companies live and die by certain numbers. Knowing these makes you instantly useful in a games interview.</p>
-<h2>The Must-Know Metrics</h2>
-<h3>DAU / MAU</h3>
-<p><strong>Daily Active Users</strong> and <strong>Monthly Active Users</strong>. How many unique players play each day/month. The heartbeat of any game.</p>
-<h3>Retention (D1, D7, D30)</h3>
-<p>Of players who joined, how many come back after 1 day, 7 days, 30 days? <em>D1 retention above 40% is considered good.</em> This is arguably the #1 metric.</p>
-<h3>ARPU & LTV</h3>
-<p><strong>ARPU</strong> = Average Revenue Per User. <strong>LTV</strong> = Lifetime Value (total money a player spends ever). These tell you if the game is profitable.</p>
-<h3>Churn Rate</h3>
-<p>The % of players who stop playing. Lower is better. Predicting and reducing churn is a core data science job.</p>
-<div class="callout game">
-<div class="callout-title">🎮 INTERVIEW GOLD</div>
-If you walk into a Nexon or Krafton interview and confidently explain D7 retention and LTV, you're already ahead of most applicants who only know generic data science.
-</div>`
-      },
-      {
-        title: "Funnel & Cohort Analysis",
-        body: `
-<p>Two techniques that game analysts use constantly. They sound fancy but the ideas are simple.</p>
-<h2>Funnel Analysis 🫗</h2>
-<p>A <strong>funnel</strong> tracks players through steps, showing where they drop off. Example new-player funnel:</p>
-<pre><code>Downloaded game:    100,000  (100%)
-Finished tutorial:   70,000  (70%)
-Played 1st match:    55,000  (55%)
-Reached level 5:     30,000  (30%)  ← BIG DROP!
-Made a purchase:      3,000   (3%)</code></pre>
-<p>See that big drop at level 5? That's where you'd investigate — maybe the game gets too hard there. Fixing it could save 25,000 players.</p>
-<h2>Cohort Analysis 👥</h2>
-<p>A <strong>cohort</strong> is a group who started at the same time. You compare them over time. Example: "Did players who joined in March stay longer than players who joined in April?"</p>
-<div class="callout">
-<div class="callout-title">🎯 WHY IT'S POWERFUL</div>
-Cohorts reveal if game changes actually helped. If your April update improved retention, the April cohort will outperform March. This proves your work had impact — which gets you promoted.
-</div>
-<div class="callout tip">
-<div class="callout-title">💡 PORTFOLIO IDEA</div>
-Build a funnel analysis on any public game dataset from Kaggle. It's an impressive, job-relevant portfolio project that shows you understand games specifically.
-</div>`
-      }
-    ]
-  },
-  {
-    title: "Getting Hired",
-    icon: "💼", color: "#00ff88", bg: "rgba(0,255,136,0.1)",
-    desc: "Turn your skills into a real job",
-    lessons: [
-      {
-        title: "Building a Portfolio That Gets You Hired",
-        body: `
-<p>Here's the honest truth: <strong>your portfolio matters more than any certificate.</strong> Employers want to see you can actually do the work.</p>
-<h2>What a Strong Portfolio Has</h2>
-<ul>
-<li><strong>3-5 real projects</strong> — quality over quantity</li>
-<li><strong>A GitHub account</strong> — where your code lives (you already started this!)</li>
-<li><strong>Clear explanations</strong> — each project explains the problem, what you did, what you found</li>
-<li><strong>Game-focused projects</strong> — since that's your specialty</li>
-</ul>
-<h2>3 Project Ideas to Start</h2>
-<ol>
-<li><strong>Player churn analysis</strong> — use a public dataset, find why players quit</li>
-<li><strong>Game sales trends</strong> — analyze what game genres are growing</li>
-<li><strong>A/B test simulator</strong> — show you understand testing</li>
-</ol>
-<div class="callout">
-<div class="callout-title">🎯 THE SECRET</div>
-A project that says "I analyzed Mobile Legends player data and found X" beats a generic certificate every time. It proves passion AND skill — exactly what game studios want.
-</div>
-<div class="callout game">
-<div class="callout-title">🎮 YOU'RE ALREADY STARTING</div>
-This very app you built and put on GitHub? That's portfolio piece #1. You're already ahead of where most beginners are.
-</div>`
-      },
-      {
-        title: "Where to Find Jobs & How to Stand Out",
-        body: `
-<p>You've got skills and a portfolio. Now let's get you hired — especially with your Business Admin background, which is secretly an advantage.</p>
-<h2>Your Hidden Advantage</h2>
-<p>Most data scientists can't speak "business." You can. You understand revenue, costs, strategy. When you combine that with data skills, you become the rare person who bridges both worlds.</p>
-<h2>Realistic Entry Points</h2>
-<ul>
-<li><strong>Business/Data Analyst roles</strong> — easier entry, then grow into data science</li>
-<li><strong>Marketing analytics</strong> at tech/game companies</li>
-<li><strong>Startup game studios</strong> — less strict on credentials, value skills</li>
-<li><strong>Remote freelance</strong> — Upwork, indie studios who need data help</li>
-</ul>
-<h2>Where to Apply</h2>
-<ul>
-<li>LinkedIn (set up a profile showing your projects)</li>
-<li>Company career pages (Nexon, Krafton, NCSoft, Riot)</li>
-<li>Wanted.co.kr and Saramin (Korea job sites)</li>
-<li>Kaggle competitions (get noticed by recruiters)</li>
-</ul>
-<div class="callout tip">
-<div class="callout-title">💡 HONEST TIMELINE</div>
-Year 1: learn + build portfolio. Around 12-18 months: start applying. Expect rejections — they're normal. Most people land their first role around the 2-year mark. Keep going. The ones who make it are simply the ones who don't quit.
-</div>
-<div class="callout game">
-<div class="callout-title">🎮 FINAL WORD</div>
-You started knowing nothing, and now you understand the whole path. That curiosity is exactly what makes a great data scientist. Keep learning one lesson at a time — you've got this. 🚀
-</div>`
-      }
-    ]
-  }
+// ============ DATA — words with en/ru/uz meanings ============
+const lessons = [
+  {id:'greet', title:{en:'Greetings & Politeness',ru:'Приветствия и вежливость',uz:'Salomlashish va xushmuomalalik'}, emoji:'👋', color:'#5b8cff', bg:'rgba(91,140,255,0.12)', words:[
+    {k:'안녕하세요', r:'annyeonghaseyo', en:'Hello (polite)', ru:'Здравствуйте', uz:'Assalomu alaykum'},
+    {k:'안녕', r:'annyeong', en:'Hi / Bye (casual)', ru:'Привет / Пока', uz:'Salom / Xayr'},
+    {k:'감사합니다', r:'gamsahamnida', en:'Thank you', ru:'Спасибо', uz:'Rahmat'},
+    {k:'고마워요', r:'gomawoyo', en:'Thanks (casual)', ru:'Спасибо (неформ.)', uz:'Rahmat (oddiy)'},
+    {k:'네', r:'ne', en:'Yes', ru:'Да', uz:'Ha'},
+    {k:'아니요', r:'aniyo', en:'No', ru:'Нет', uz:"Yo'q"},
+    {k:'죄송합니다', r:'joesonghamnida', en:'I am sorry', ru:'Извините', uz:'Kechirasiz'},
+    {k:'괜찮아요', r:'gwaenchanayo', en:"It's okay", ru:'Всё в порядке', uz:'Yaxshi / Hechqisi yo\'q'},
+    {k:'안녕히 가세요', r:'annyeonghi gaseyo', en:'Goodbye', ru:'До свидания', uz:'Xayr'},
+    {k:'만나서 반가워요', r:'mannaseo bangawoyo', en:'Nice to meet you', ru:'Приятно познакомиться', uz:'Tanishganimdan xursandman'}
+  ]},
+  {id:'people', title:{en:'People & Family',ru:'Люди и семья',uz:'Odamlar va oila'}, emoji:'🧑‍🤝‍🧑', color:'#ff6b9d', bg:'rgba(255,107,157,0.12)', words:[
+    {k:'사람', r:'saram', en:'Person', ru:'Человек', uz:'Odam'},
+    {k:'친구', r:'chingu', en:'Friend', ru:'Друг', uz:"Do'st"},
+    {k:'가족', r:'gajok', en:'Family', ru:'Семья', uz:'Oila'},
+    {k:'엄마', r:'eomma', en:'Mom', ru:'Мама', uz:'Onam'},
+    {k:'아빠', r:'appa', en:'Dad', ru:'Папа', uz:'Otam'},
+    {k:'이름', r:'ireum', en:'Name', ru:'Имя', uz:'Ism'},
+    {k:'사랑', r:'sarang', en:'Love', ru:'Любовь', uz:'Sevgi'},
+    {k:'선생님', r:'seonsaengnim', en:'Teacher', ru:'Учитель', uz:"O'qituvchi"},
+    {k:'아이', r:'ai', en:'Child', ru:'Ребёнок', uz:'Bola'},
+    {k:'남자', r:'namja', en:'Man', ru:'Мужчина', uz:'Erkak'},
+    {k:'여자', r:'yeoja', en:'Woman', ru:'Женщина', uz:'Ayol'}
+  ]},
+  {id:'daily', title:{en:'Daily Life',ru:'Повседневная жизнь',uz:'Kundalik hayot'}, emoji:'☕', color:'#3ddc97', bg:'rgba(61,220,151,0.12)', words:[
+    {k:'물', r:'mul', en:'Water', ru:'Вода', uz:'Suv'},
+    {k:'밥', r:'bap', en:'Rice / Meal', ru:'Рис / Еда', uz:'Guruch / Ovqat'},
+    {k:'커피', r:'keopi', en:'Coffee', ru:'Кофе', uz:'Qahva'},
+    {k:'집', r:'jip', en:'Home / House', ru:'Дом', uz:'Uy'},
+    {k:'방', r:'bang', en:'Room', ru:'Комната', uz:'Xona'},
+    {k:'화장실', r:'hwajangsil', en:'Bathroom', ru:'Туалет', uz:'Hojatxona'},
+    {k:'문', r:'mun', en:'Door', ru:'Дверь', uz:'Eshik'},
+    {k:'옷', r:'ot', en:'Clothes', ru:'Одежда', uz:'Kiyim'},
+    {k:'전화', r:'jeonhwa', en:'Phone / Call', ru:'Телефон / Звонок', uz:'Telefon / Qo\'ng\'iroq'},
+    {k:'차', r:'cha', en:'Car / Tea', ru:'Машина / Чай', uz:'Mashina / Choy'},
+    {k:'길', r:'gil', en:'Road / Street', ru:'Дорога / Улица', uz:"Yo'l / Ko'cha"},
+    {k:'가게', r:'gage', en:'Shop / Store', ru:'Магазин', uz:"Do'kon"}
+  ]},
+  {id:'food', title:{en:'Food & Eating',ru:'Еда',uz:'Ovqat'}, emoji:'🍜', color:'#ff8c42', bg:'rgba(255,140,66,0.12)', words:[
+    {k:'음식', r:'eumsik', en:'Food', ru:'Еда', uz:'Ovqat'},
+    {k:'고기', r:'gogi', en:'Meat', ru:'Мясо', uz:'Go\'sht'},
+    {k:'김치', r:'gimchi', en:'Kimchi', ru:'Кимчи', uz:'Kimchi'},
+    {k:'과일', r:'gwail', en:'Fruit', ru:'Фрукты', uz:'Meva'},
+    {k:'빵', r:'ppang', en:'Bread', ru:'Хлеб', uz:'Non'},
+    {k:'우유', r:'uyu', en:'Milk', ru:'Молоко', uz:'Sut'},
+    {k:'맛있어요', r:'masisseoyo', en:'It is delicious', ru:'Вкусно', uz:'Mazali'},
+    {k:'배고파요', r:'baegopayo', en:'I am hungry', ru:'Я голоден', uz:'Qornim och'},
+    {k:'먹다', r:'meokda', en:'To eat', ru:'Есть (кушать)', uz:'Yemoq'},
+    {k:'마시다', r:'masida', en:'To drink', ru:'Пить', uz:'Ichmoq'},
+    {k:'식당', r:'sikdang', en:'Restaurant', ru:'Ресторан', uz:'Restoran'}
+  ]},
+  {id:'numbers', title:{en:'Numbers & Time',ru:'Числа и время',uz:'Sonlar va vaqt'}, emoji:'🔢', color:'#a78bfa', bg:'rgba(167,139,250,0.12)', words:[
+    {k:'하나', r:'hana', en:'One', ru:'Один', uz:'Bir'},
+    {k:'둘', r:'dul', en:'Two', ru:'Два', uz:'Ikki'},
+    {k:'셋', r:'set', en:'Three', ru:'Три', uz:'Uch'},
+    {k:'넷', r:'net', en:'Four', ru:'Четыре', uz:"To'rt"},
+    {k:'다섯', r:'daseot', en:'Five', ru:'Пять', uz:'Besh'},
+    {k:'시간', r:'sigan', en:'Time / Hour', ru:'Время / Час', uz:'Vaqt / Soat'},
+    {k:'오늘', r:'oneul', en:'Today', ru:'Сегодня', uz:'Bugun'},
+    {k:'내일', r:'naeil', en:'Tomorrow', ru:'Завтра', uz:'Ertaga'},
+    {k:'어제', r:'eoje', en:'Yesterday', ru:'Вчера', uz:'Kecha'},
+    {k:'지금', r:'jigeum', en:'Now', ru:'Сейчас', uz:'Hozir'},
+    {k:'아침', r:'achim', en:'Morning', ru:'Утро', uz:'Ertalab'},
+    {k:'저녁', r:'jeonyeok', en:'Evening', ru:'Вечер', uz:'Kechqurun'}
+  ]},
+  {id:'work', title:{en:'Work & Jobs',ru:'Работа',uz:'Ish'}, emoji:'💼', color:'#ffc94d', bg:'rgba(255,201,77,0.12)', words:[
+    {k:'일', r:'il', en:'Work', ru:'Работа', uz:'Ish'},
+    {k:'회사', r:'hoesa', en:'Company', ru:'Компания', uz:'Kompaniya'},
+    {k:'돈', r:'don', en:'Money', ru:'Деньги', uz:'Pul'},
+    {k:'경험', r:'gyeongheom', en:'Experience', ru:'Опыт', uz:'Tajriba'},
+    {k:'면접', r:'myeonjeop', en:'Job interview', ru:'Собеседование', uz:'Suhbat (ishga)'},
+    {k:'사무실', r:'samusil', en:'Office', ru:'Офис', uz:'Ofis'},
+    {k:'직업', r:'jigeop', en:'Job / Occupation', ru:'Профессия', uz:'Kasb'},
+    {k:'사장님', r:'sajangnim', en:'Boss', ru:'Начальник', uz:'Boshliq'},
+    {k:'월급', r:'wolgeup', en:'Salary', ru:'Зарплата', uz:'Maosh'},
+    {k:'바빠요', r:'bappayo', en:'I am busy', ru:'Я занят', uz:'Bandman'},
+    {k:'일하다', r:'ilhada', en:'To work', ru:'Работать', uz:'Ishlamoq'}
+  ]},
+  {id:'study', title:{en:'Study & School',ru:'Учёба и школа',uz:"O'qish va maktab"}, emoji:'📚', color:'#4dd0e1', bg:'rgba(77,208,225,0.12)', words:[
+    {k:'학교', r:'hakgyo', en:'School', ru:'Школа', uz:'Maktab'},
+    {k:'학생', r:'haksaeng', en:'Student', ru:'Студент / Ученик', uz:'Talaba / O\'quvchi'},
+    {k:'공부', r:'gongbu', en:'Study', ru:'Учёба', uz:"O'qish"},
+    {k:'책', r:'chaek', en:'Book', ru:'Книга', uz:'Kitob'},
+    {k:'시험', r:'siheom', en:'Exam / Test', ru:'Экзамен', uz:'Imtihon'},
+    {k:'수업', r:'sueop', en:'Class / Lesson', ru:'Урок / Занятие', uz:'Dars'},
+    {k:'질문', r:'jilmun', en:'Question', ru:'Вопрос', uz:'Savol'},
+    {k:'숙제', r:'sukje', en:'Homework', ru:'Домашнее задание', uz:'Uy vazifasi'},
+    {k:'배우다', r:'baeuda', en:'To learn', ru:'Учить (учиться)', uz:"O'rganmoq"},
+    {k:'가르치다', r:'gareuchida', en:'To teach', ru:'Преподавать', uz:"O'rgatmoq"},
+    {k:'한국어', r:'hangugeo', en:'Korean language', ru:'Корейский язык', uz:'Koreys tili'}
+  ]},
+  {id:'talk', title:{en:'Everyday Talk',ru:'Повседневная речь',uz:'Kundalik nutq'}, emoji:'💬', color:'#f06292', bg:'rgba(240,98,146,0.12)', words:[
+    {k:'뭐예요', r:'mwoyeyo', en:'What is it?', ru:'Что это?', uz:'Bu nima?'},
+    {k:'어디예요', r:'eodiyeyo', en:'Where is it?', ru:'Где это?', uz:'Bu qayerda?'},
+    {k:'언제', r:'eonje', en:'When', ru:'Когда', uz:'Qachon'},
+    {k:'왜', r:'wae', en:'Why', ru:'Почему', uz:'Nega'},
+    {k:'어떻게', r:'eotteoke', en:'How', ru:'Как', uz:'Qanday'},
+    {k:'얼마예요', r:'eolmayeyo', en:'How much is it?', ru:'Сколько стоит?', uz:'Bu qancha?'},
+    {k:'좋아요', r:'joayo', en:'Good / I like it', ru:'Хорошо / Нравится', uz:'Yaxshi / Yoqadi'},
+    {k:'몰라요', r:'mollayo', en:"I don't know", ru:'Не знаю', uz:'Bilmayman'},
+    {k:'알아요', r:'arayo', en:'I know', ru:'Знаю', uz:'Bilaman'},
+    {k:'도와주세요', r:'dowajuseyo', en:'Please help me', ru:'Помогите, пожалуйста', uz:'Iltimos yordam bering'},
+    {k:'잠깐만요', r:'jamkkanmanyo', en:'Just a moment', ru:'Минуточку', uz:'Bir daqiqa'},
+    {k:'천천히', r:'cheoncheonhi', en:'Slowly', ru:'Медленно', uz:'Sekin'}
+  ]},
+  {id:'verbs', title:{en:'Common Verbs',ru:'Частые глаголы',uz:'Keng tarqalgan fe\'llar'}, emoji:'⚡', color:'#7986cb', bg:'rgba(121,134,203,0.12)', words:[
+    {k:'가다', r:'gada', en:'To go', ru:'Идти / Ехать', uz:'Bormoq'},
+    {k:'오다', r:'oda', en:'To come', ru:'Приходить', uz:'Kelmoq'},
+    {k:'하다', r:'hada', en:'To do', ru:'Делать', uz:'Qilmoq'},
+    {k:'보다', r:'boda', en:'To see / watch', ru:'Смотреть / Видеть', uz:"Ko'rmoq"},
+    {k:'듣다', r:'deutda', en:'To listen / hear', ru:'Слушать', uz:'Eshitmoq'},
+    {k:'말하다', r:'malhada', en:'To speak', ru:'Говорить', uz:'Gapirmoq'},
+    {k:'사다', r:'sada', en:'To buy', ru:'Покупать', uz:'Sotib olmoq'},
+    {k:'주다', r:'juda', en:'To give', ru:'Давать', uz:'Bermoq'},
+    {k:'알다', r:'alda', en:'To know', ru:'Знать', uz:'Bilmoq'},
+    {k:'살다', r:'salda', en:'To live', ru:'Жить', uz:'Yashamoq'},
+    {k:'만나다', r:'mannada', en:'To meet', ru:'Встречать', uz:'Uchrashmoq'},
+    {k:'자다', r:'jada', en:'To sleep', ru:'Спать', uz:'Uxlamoq'}
+  ]},
+  {id:'feel', title:{en:'Feelings & Describing',ru:'Чувства и описания',uz:'His-tuyg\'ular'}, emoji:'😊', color:'#26c6da', bg:'rgba(38,198,218,0.12)', words:[
+    {k:'좋다', r:'jota', en:'To be good', ru:'Быть хорошим', uz:'Yaxshi bo\'lmoq'},
+    {k:'나쁘다', r:'nappeuda', en:'To be bad', ru:'Быть плохим', uz:'Yomon bo\'lmoq'},
+    {k:'크다', r:'keuda', en:'To be big', ru:'Быть большим', uz:'Katta bo\'lmoq'},
+    {k:'작다', r:'jakda', en:'To be small', ru:'Быть маленьким', uz:'Kichik bo\'lmoq'},
+    {k:'행복하다', r:'haengbokhada', en:'To be happy', ru:'Быть счастливым', uz:'Baxtli bo\'lmoq'},
+    {k:'슬프다', r:'seulpeuda', en:'To be sad', ru:'Быть грустным', uz:'Xafa bo\'lmoq'},
+    {k:'피곤하다', r:'pigonhada', en:'To be tired', ru:'Быть усталым', uz:'Charchagan bo\'lmoq'},
+    {k:'재미있다', r:'jaemiitda', en:'To be fun', ru:'Быть интересным', uz:'Qiziqarli bo\'lmoq'},
+    {k:'예쁘다', r:'yeppeuda', en:'To be pretty', ru:'Быть красивым', uz:'Chiroyli bo\'lmoq'},
+    {k:'덥다', r:'deopda', en:'To be hot (weather)', ru:'Быть жарким', uz:'Issiq bo\'lmoq'},
+    {k:'춥다', r:'chupda', en:'To be cold (weather)', ru:'Быть холодным', uz:'Sovuq bo\'lmoq'}
+  ]},
+  {id:'int_verbs', title:{en:'★ Intermediate Verbs',ru:'★ Глаголы (средний)',uz:'★ Fe\'llar (o\'rta)'}, emoji:'🔥', color:'#ff7043', bg:'rgba(255,112,67,0.12)', words:[
+    {k:'시작하다', r:'sijakhada', en:'To start / begin', ru:'Начинать', uz:'Boshlamoq'},
+    {k:'끝나다', r:'kkeutnada', en:'To end / finish', ru:'Заканчиваться', uz:'Tugamoq'},
+    {k:'준비하다', r:'junbihada', en:'To prepare', ru:'Готовить(ся)', uz:'Tayyorlamoq'},
+    {k:'결정하다', r:'gyeoljeonghada', en:'To decide', ru:'Решать', uz:'Qaror qilmoq'},
+    {k:'기억하다', r:'gieokhada', en:'To remember', ru:'Помнить', uz:'Eslamoq'},
+    {k:'잊다', r:'itda', en:'To forget', ru:'Забывать', uz:'Unutmoq'},
+    {k:'설명하다', r:'seolmyeonghada', en:'To explain', ru:'Объяснять', uz:'Tushuntirmoq'},
+    {k:'이해하다', r:'ihaehada', en:'To understand', ru:'Понимать', uz:'Tushunmoq'},
+    {k:'기다리다', r:'gidarida', en:'To wait', ru:'Ждать', uz:'Kutmoq'},
+    {k:'바꾸다', r:'bakkuda', en:'To change', ru:'Менять', uz:'O\'zgartirmoq'},
+    {k:'느끼다', r:'neukkida', en:'To feel', ru:'Чувствовать', uz:'His qilmoq'},
+    {k:'생각하다', r:'saenggakhada', en:'To think', ru:'Думать', uz:'O\'ylamoq'}
+  ]},
+  {id:'int_words', title:{en:'★ Intermediate Words',ru:'★ Слова (средний)',uz:'★ So\'zlar (o\'rta)'}, emoji:'💎', color:'#ab47bc', bg:'rgba(171,71,188,0.12)', words:[
+    {k:'문제', r:'munje', en:'Problem', ru:'Проблема', uz:'Muammo'},
+    {k:'방법', r:'bangbeop', en:'Method / Way', ru:'Способ / Метод', uz:'Usul'},
+    {k:'이유', r:'iyu', en:'Reason', ru:'Причина', uz:'Sabab'},
+    {k:'생각', r:'saenggak', en:'Thought / Idea', ru:'Мысль / Идея', uz:'Fikr'},
+    {k:'마음', r:'maeum', en:'Mind / Heart', ru:'Душа / Сердце', uz:'Qalb / Yurak'},
+    {k:'기분', r:'gibun', en:'Mood / Feeling', ru:'Настроение', uz:'Kayfiyat'},
+    {k:'관계', r:'gwangye', en:'Relationship', ru:'Отношения', uz:'Munosabat'},
+    {k:'준비', r:'junbi', en:'Preparation', ru:'Подготовка', uz:'Tayyorgarlik'},
+    {k:'계획', r:'gyehoek', en:'Plan', ru:'План', uz:'Reja'},
+    {k:'결과', r:'gyeolgwa', en:'Result', ru:'Результат', uz:'Natija'},
+    {k:'기회', r:'gihoe', en:'Opportunity', ru:'Возможность', uz:'Imkoniyat'},
+    {k:'목표', r:'mokpyo', en:'Goal', ru:'Цель', uz:'Maqsad'}
+  ]},
+  {id:'connectors', title:{en:'★ Connectors & Adverbs',ru:'★ Связки и наречия',uz:'★ Bog\'lovchilar'}, emoji:'🔗', color:'#26a69a', bg:'rgba(38,166,154,0.12)', words:[
+    {k:'그리고', r:'geurigo', en:'And', ru:'И', uz:'Va'},
+    {k:'그래서', r:'geuraeseo', en:'So / Therefore', ru:'Поэтому', uz:'Shuning uchun'},
+    {k:'하지만', r:'hajiman', en:'But / However', ru:'Но / Однако', uz:'Lekin'},
+    {k:'그런데', r:'geureonde', en:'By the way / But', ru:'Кстати / Но', uz:'Aytgancha / Lekin'},
+    {k:'왜냐하면', r:'waenyahamyeon', en:'Because', ru:'Потому что', uz:'Chunki'},
+    {k:'아마', r:'ama', en:'Maybe / Probably', ru:'Возможно', uz:'Balki'},
+    {k:'항상', r:'hangsang', en:'Always', ru:'Всегда', uz:'Doim'},
+    {k:'가끔', r:'gakkeum', en:'Sometimes', ru:'Иногда', uz:'Ba\'zan'},
+    {k:'벌써', r:'beolsseo', en:'Already', ru:'Уже', uz:'Allaqachon'},
+    {k:'아직', r:'ajik', en:'Still / Yet', ru:'Ещё / Пока', uz:'Hali'},
+    {k:'정말', r:'jeongmal', en:'Really', ru:'Действительно', uz:'Rostdan'},
+    {k:'너무', r:'neomu', en:'Too / Very', ru:'Слишком / Очень', uz:'Juda'}
+  ]},
+  {id:'int_phrases', title:{en:'★ Useful Phrases',ru:'★ Полезные фразы',uz:'★ Foydali iboralar'}, emoji:'🗣️', color:'#5c6bc0', bg:'rgba(92,107,192,0.12)', words:[
+    {k:'시간이 없어요', r:'sigani eopseoyo', en:'I have no time', ru:'У меня нет времени', uz:'Vaqtim yo\'q'},
+    {k:'무슨 뜻이에요', r:'museun tteusieyo', en:'What does it mean?', ru:'Что это значит?', uz:'Bu nimani anglatadi?'},
+    {k:'다시 한번', r:'dasi hanbeon', en:'One more time', ru:'Ещё раз', uz:'Yana bir marta'},
+    {k:'잘 모르겠어요', r:'jal moreugesseoyo', en:"I'm not sure", ru:'Я не уверен', uz:'Aniq bilmayman'},
+    {k:'한국말 잘 못해요', r:'hangungmal jal mothaeyo', en:"I can't speak Korean well", ru:'Я плохо говорю по-корейски', uz:'Koreyscha yaxshi gapira olmayman'},
+    {k:'천천히 말해 주세요', r:'cheoncheonhi malhae juseyo', en:'Please speak slowly', ru:'Говорите медленнее, пожалуйста', uz:'Iltimos sekin gapiring'},
+    {k:'약속할게요', r:'yaksokhalgeyo', en:'I promise', ru:'Обещаю', uz:'Va\'da beraman'},
+    {k:'걱정하지 마세요', r:'geokjeonghaji maseyo', en:"Don't worry", ru:'Не волнуйтесь', uz:'Xavotir olmang'},
+    {k:'잘 했어요', r:'jal haesseoyo', en:'You did well', ru:'Молодец', uz:'Yaxshi bajardingiz'},
+    {k:'힘내세요', r:'himnaeseyo', en:'Cheer up / Stay strong', ru:'Держись / Не унывай', uz:'Bardam bo\'ling'}
+  ]}
 ];
 
-// ===== STATE =====
-let done = new Set(JSON.parse(localStorage.getItem('dq_lessons_done') || '[]'));
-let currentMod = 0, currentLes = 0;
+const sentences = [
+  {en:'I drink water',ru:'Я пью воду',uz:'Men suv ichaman', korean:['저는','물을','마셔요'], extra:['밥을','커피를']},
+  {en:'I am learning Korean',ru:'Я учу корейский',uz:'Men koreys tilini o\'rganaman', korean:['저는','한국어를','배워요'], extra:['일해요','먹어요']},
+  {en:'Thank you, friend',ru:'Спасибо, друг',uz:'Rahmat, do\'stim', korean:['친구','감사합니다'], extra:['가족','사랑']},
+  {en:'I go home',ru:'Я иду домой',uz:'Men uyga boraman', korean:['저는','집에','가요'], extra:['회사에','학교에']},
+  {en:'I eat food',ru:'Я ем еду',uz:'Men ovqat yeyman', korean:['저는','음식을','먹어요'], extra:['물을','책을']},
+  {en:'I am busy today',ru:'Я сегодня занят',uz:'Men bugun bandman', korean:['저는','오늘','바빠요'], extra:['내일','어제']},
+  {en:'I study Korean every day',ru:'Я учу корейский каждый день',uz:'Men har kuni koreys tilini o\'rganaman', korean:['저는','매일','한국어를','공부해요'], extra:['가끔','일본어를']},
+  {en:'I will meet my friend tomorrow',ru:'Завтра я встречусь с другом',uz:'Ertaga do\'stim bilan uchrashaman', korean:['저는','내일','친구를','만나요'], extra:['어제','가족을']}
+];
 
-// Build flat lesson index for navigation
-let flatLessons = [];
-curriculum.forEach((m, mi) => m.lessons.forEach((l, li) => flatLessons.push({mi, li})));
+const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}};
+const save=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+let state={words:load('kr_words',{}),streak:load('kr_streak',0),todayCount:load('kr_today',0),lastDay:load('kr_lastday',''),totalXP:load('kr_xp',0)};
+const today=new Date().toDateString();
+if(state.lastDay!==today){const y=new Date(Date.now()-86400000).toDateString();if(state.lastDay===y)state.streak++;else if(state.lastDay!=='')state.streak=1;else state.streak=1;state.todayCount=0;state.lastDay=today;saveAll();}
+function saveAll(){save('kr_words',state.words);save('kr_streak',state.streak);save('kr_today',state.todayCount);save('kr_lastday',state.lastDay);save('kr_xp',state.totalXP);}
 
-function totalLessons() { return flatLessons.length; }
-function lessonKey(mi, li) { return `${mi}-${li}`; }
+function speak(text){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='ko-KR';u.rate=0.85;const v=speechSynthesis.getVoices().find(x=>x.lang.startsWith('ko'));if(v)u.voice=v;speechSynthesis.speak(u);}catch(e){}}
+if('speechSynthesis' in window){speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=()=>speechSynthesis.getVoices();}
 
-// ===== RENDER HOME =====
-function renderHome() {
-  const container = document.getElementById('modules-container');
-  container.innerHTML = curriculum.map((mod, mi) => {
-    const doneCount = mod.lessons.filter((_, li) => done.has(lessonKey(mi, li))).length;
-    const lessons = mod.lessons.map((les, li) => {
-      const isDone = done.has(lessonKey(mi, li));
-      return `<div class="lesson-item ${isDone ? 'done' : ''}" onclick="openLesson(${mi}, ${li})">
-        <div class="lesson-check">${isDone ? '✓' : ''}</div>
-        <div class="lesson-name">${les.title}</div>
-        <div class="lesson-go">READ →</div>
-      </div>`;
-    }).join('');
+// meaning of a word in current language
+function m(w){return w[LANG]||w.en;}
+function lt(obj){return obj[LANG]||obj.en;}
 
-    return `<div class="module" style="--mod-color:${mod.color};--mod-bg:${mod.bg}" id="mod-${mi}">
-      <div class="module-head" onclick="toggleModule(${mi})">
-        <div class="mod-icon" style="background:${mod.bg}">${mod.icon}</div>
-        <div class="mod-info">
-          <div class="mod-num">Module ${mi+1}</div>
-          <div class="mod-title">${mod.title}</div>
-          <div class="mod-meta">${mod.desc} · ${doneCount}/${mod.lessons.length} done</div>
-        </div>
-        <div class="mod-arrow">›</div>
-      </div>
-      <div class="mod-lessons">${lessons}</div>
-    </div>`;
+function setLang(lang){
+  LANG=lang;localStorage.setItem('kr_lang',lang);
+  ['en','ru','uz'].forEach(l=>document.getElementById('lang-'+l).classList.toggle('active',l===lang));
+  applyUI();renderHome();
+}
+
+function applyUI(){
+  const x=t();
+  document.getElementById('brand-text').textContent=x.brand;
+  document.getElementById('goal-title').textContent=x.goalTitle;
+  document.getElementById('ring-label').textContent=x.today;
+  document.getElementById('st-lessons').textContent=x.lessons;
+  document.getElementById('st-stats').textContent=x.stats;
+  document.getElementById('st-learning').textContent=x.learning;
+  document.getElementById('tab-learn').textContent=x.learn;
+  document.getElementById('tab-review').textContent=x.review;
+  document.getElementById('tab-stats').textContent=x.statsTab;
+  document.getElementById('psl-learned').textContent=x.learned;
+  document.getElementById('psl-streak').textContent=x.streak;
+  document.getElementById('psl-mastered').textContent=x.mastered;
+  document.getElementById('psl-xp').textContent=x.xp;
+  document.getElementById('an-title').textContent=x.anTitle;
+  document.getElementById('an-body').textContent=x.anBody;
+}
+
+function renderHome(){
+  if(!localStorage.getItem('kr_audionote'))document.getElementById('audio-note').style.display='block';
+  const x=t();
+  document.getElementById('ring-num').textContent=state.todayCount;
+  const pct=Math.min(state.todayCount/20,1);
+  document.getElementById('ring-fill').style.strokeDashoffset=213.6*(1-pct);
+  const sub=document.getElementById('goal-sub');
+  if(state.todayCount===0)sub.textContent=x.goal0;
+  else if(state.todayCount<10)sub.textContent=state.todayCount+' '+x.goalLow;
+  else sub.textContent=state.todayCount+' '+x.goalHigh;
+  document.getElementById('lesson-grid').innerHTML=lessons.map(l=>{
+    const learned=l.words.filter(w=>state.words[w.k]&&state.words[w.k].box>=1).length;
+    const p=Math.round(learned/l.words.length*100);
+    return '<div class="lesson-card" style="--lc:'+l.color+';--lcbg:'+l.bg+'" onclick="startLesson(\''+l.id+'\')"><div class="lc-emoji" style="background:'+l.bg+'">'+l.emoji+'</div><div class="lc-info"><div class="lc-title">'+lt(l.title)+'</div><div class="lc-sub">'+learned+'/'+l.words.length+' '+x.learned.toLowerCase()+'</div><div class="lc-progress"><div class="lc-fill" style="width:'+p+'%"></div></div></div><div class="lc-arrow">›</div></div>';
   }).join('');
-  updateProgress();
 }
 
-function toggleModule(mi) {
-  document.getElementById('mod-' + mi).classList.toggle('open');
+let session=null;
+function startLesson(id){
+  const lesson=lessons.find(l=>l.id===id);
+  let queue=[];
+  lesson.words.forEach(w=>{queue.push({type:'learn',word:w,lesson:lesson});queue.push({type:'choose',word:w,lesson:lesson});queue.push({type:'recall',word:w,lesson:lesson});});
+  const sent=sentences[Math.floor(Math.random()*sentences.length)];
+  queue.push({type:'sentence',sentence:sent});
+  session={lesson:lesson,queue:queue,idx:0,correct:0,learnedThisSession:new Set()};
+  nav('study',null,true);renderStep();
 }
 
-function updateProgress() {
-  const total = totalLessons();
-  const pct = total ? Math.round((done.size / total) * 100) : 0;
-  document.getElementById('op-fill').style.width = pct + '%';
-  document.getElementById('op-text').textContent = `${done.size} of ${total} lessons complete`;
-  document.getElementById('progress-mini').textContent = pct + '%';
+function renderStep(){
+  const wrap=document.getElementById('study-wrap');
+  if(session.idx>=session.queue.length){renderComplete();return;}
+  const step=session.queue[session.idx];
+  const progress=Math.round(session.idx/session.queue.length*100);
+  let inner='<div class="study-top"><button class="study-back" onclick="nav(\'home\',document.querySelectorAll(\'.tab\')[0])">✕</button><div class="study-bar"><div class="study-bar-fill" style="width:'+progress+'%"></div></div><span class="study-count">'+(session.idx+1)+'/'+session.queue.length+'</span></div>';
+  if(step.type==='learn')inner+=learnStep(step);
+  else if(step.type==='choose')inner+=chooseStep(step);
+  else if(step.type==='recall')inner+=recallStep(step);
+  else if(step.type==='sentence')inner+=sentenceStep(step);
+  wrap.innerHTML=inner;
+  if(step.type==='learn')setTimeout(()=>speak(step.word.k),350);
 }
 
-// ===== OPEN LESSON =====
-function openLesson(mi, li) {
-  currentMod = mi; currentLes = li;
-  const mod = curriculum[mi];
-  const les = mod.lessons[li];
-  const isDone = done.has(lessonKey(mi, li));
+function esc(s){return (''+s).replace(/'/g,"\\'");}
 
-  // navigation
-  const flatIdx = flatLessons.findIndex(f => f.mi === mi && f.li === li);
-  const prev = flatIdx > 0 ? flatLessons[flatIdx - 1] : null;
-  const next = flatIdx < flatLessons.length - 1 ? flatLessons[flatIdx + 1] : null;
+function learnStep(step){const w=step.word;const x=t();return '<div class="word-card"><button class="audio-btn" onclick="speak(\''+w.k+'\');this.classList.add(\'playing\');setTimeout(()=>this.classList.remove(\'playing\'),700)">🔊</button><div class="word-hangul">'+w.k+'</div><div class="word-roman">'+w.r+'</div><div class="word-english">'+m(w)+'</div><div class="tap-hint">'+x.tapFlip+'</div></div><button class="btn btn-primary btn-full" onclick="advance()">'+x.gotit+'</button>';}
 
-  document.getElementById('lesson-view').innerHTML = `
-    <button class="lesson-back" onclick="goHome()">← Back to Lessons</button>
-    <div class="lesson-tag" style="--lesson-color:${mod.color}">${mod.icon} ${mod.title}</div>
-    <h1 style="--lesson-color:${mod.color}">${les.title}</h1>
-    <div class="lesson-content" style="--lesson-color:${mod.color}">${les.body}</div>
-    <button class="btn btn-done ${isDone ? 'completed' : ''}" id="done-btn" onclick="markDone(${mi}, ${li})">
-      ${isDone ? '✓ Completed — Tap to undo' : 'Mark Lesson Complete ✓'}
-    </button>
-    <div class="lesson-nav">
-      <button class="btn btn-secondary" ${prev ? `onclick="openLesson(${prev.mi}, ${prev.li})"` : 'disabled'}>← Prev</button>
-      <button class="btn btn-primary" ${next ? `onclick="openLesson(${next.mi}, ${next.li})"` : 'onclick="goHome()"'}>${next ? 'Next →' : 'Finish 🎉'}</button>
-    </div>`;
-
-  document.getElementById('view-home').classList.remove('active');
-  document.getElementById('view-lesson').classList.add('active');
-  window.scrollTo(0, 0);
+function chooseStep(step){
+  const w=step.word;const x=t();
+  const allM=lessons.flatMap(l=>l.words.map(z=>m(z)));
+  let opts=[m(w)];const others=allM.filter(e=>e!==m(w)).sort(()=>Math.random()-0.5);opts.push(...others.slice(0,3));opts=opts.sort(()=>Math.random()-0.5);
+  return '<div class="word-card" style="min-height:160px"><button class="audio-btn" onclick="speak(\''+w.k+'\')">🔊</button><div class="word-hangul small">'+w.k+'</div><div class="word-roman">'+w.r+'</div></div><div style="text-align:center;color:var(--muted);font-size:0.85rem;margin-bottom:0.8rem">'+x.whatMeans+'</div><div class="options">'+opts.map(o=>'<button class="option" onclick="checkChoice(this,\''+esc(o)+'\',\''+esc(m(w))+'\',\''+w.k+'\')">'+o+'</button>').join('')+'</div><div class="feedback" id="fb"></div>';
 }
 
-function markDone(mi, li) {
-  const key = lessonKey(mi, li);
-  const btn = document.getElementById('done-btn');
-  if (done.has(key)) {
-    done.delete(key);
-    btn.classList.remove('completed');
-    btn.textContent = 'Mark Lesson Complete ✓';
-  } else {
-    done.add(key);
-    btn.classList.add('completed');
-    btn.textContent = '✓ Completed — Tap to undo';
-    showToast('Lesson complete! Keep going 🚀');
+function checkChoice(el,chosen,correct,hangul){
+  const x=t();
+  document.querySelectorAll('.option').forEach(o=>o.disabled=true);
+  const fb=document.getElementById('fb');speak(hangul);
+  if(chosen===correct){el.classList.add('correct');recordWord(hangul,true);session.correct++;fb.className='feedback good show';fb.innerHTML=x.correct;setTimeout(()=>advance(),1100);}
+  else{el.classList.add('wrong');document.querySelectorAll('.option').forEach(o=>{if(o.textContent===correct)o.classList.add('correct');});recordWord(hangul,false);fb.className='feedback bad show';fb.innerHTML=x.notQuite+' "<b>'+correct+'</b>"'+x.seeSoon;setTimeout(()=>advance(),1900);}
+}
+
+function recallStep(step){const w=step.word;const x=t();return '<div class="word-card" id="recall-card" onclick="flipRecall(\''+w.k+'\',\''+w.r+'\',\''+esc(m(w))+'\')"><button class="audio-btn" onclick="event.stopPropagation();speak(\''+w.k+'\')">🔊</button><div class="word-hangul small">'+w.k+'</div><div class="tap-hint">'+x.remember+'</div></div><div class="recall-row" id="recall-btns" style="display:none"><button class="btn btn-hard" onclick="recordWord(\''+w.k+'\',false);advance()">'+x.forgot+'</button><button class="btn btn-easy" onclick="recordWord(\''+w.k+'\',true);session.correct++;advance()">'+x.knewIt+'</button></div>';}
+
+function flipRecall(k,r,e){const card=document.getElementById('recall-card');speak(k);card.innerHTML='<button class="audio-btn" onclick="event.stopPropagation();speak(\''+k+'\')">🔊</button><div class="word-hangul small">'+k+'</div><div class="word-roman">'+r+'</div><div class="word-english">'+e+'</div>';document.getElementById('recall-btns').style.display='flex';}
+
+let sentenceState=null;
+function sentenceStep(step){const s=step.sentence;const x=t();const allChips=[...s.korean,...s.extra].sort(()=>Math.random()-0.5);sentenceState={target:s.korean,placed:[]};return '<div class="sentence-english">'+x.build+': "<b>'+lt(s)+'</b>"</div><div class="sentence-target" id="sent-target"><span style="color:var(--muted);font-size:0.85rem">'+x.tapOrder+'</span></div><div class="chip-bank">'+allChips.map((c,i)=>'<button class="chip" id="chip-'+i+'" onclick="placeChip('+i+',\''+c+'\')">'+c+'</button>').join('')+'</div><button class="btn btn-primary btn-full" onclick="checkSentence()">'+x.checkAns+'</button><div class="feedback" id="sent-fb"></div>';}
+
+function placeChip(i,word){const chip=document.getElementById('chip-'+i);if(chip.classList.contains('placed'))return;chip.classList.add('placed');sentenceState.placed.push({i:i,word:word});renderTarget();}
+function renderTarget(){const x=t();const tg=document.getElementById('sent-target');if(sentenceState.placed.length===0){tg.innerHTML='<span style="color:var(--muted);font-size:0.85rem">'+x.tapOrder+'</span>';return;}tg.innerHTML=sentenceState.placed.map((p,idx)=>'<span class="slot" onclick="removeChip('+idx+')">'+p.word+'</span>').join('');}
+function removeChip(idx){const p=sentenceState.placed[idx];document.getElementById('chip-'+p.i).classList.remove('placed');sentenceState.placed.splice(idx,1);renderTarget();}
+function checkSentence(){const x=t();const built=sentenceState.placed.map(p=>p.word);const fb=document.getElementById('sent-fb');const correct=JSON.stringify(built)===JSON.stringify(sentenceState.target);speak(sentenceState.target.join(' '));if(correct){fb.className='feedback good show';fb.innerHTML=x.perfect;session.correct++;state.totalXP+=10;setTimeout(()=>advance(),1600);}else{fb.className='feedback bad show';fb.innerHTML=x.close+' <b>'+sentenceState.target.join(' ')+'</b>';setTimeout(()=>advance(),2400);}}
+
+function recordWord(hangul,correct){if(!state.words[hangul])state.words[hangul]={seen:0,correct:0,box:0};const w=state.words[hangul];w.seen++;if(correct){w.correct++;w.box=Math.min(w.box+1,5);state.totalXP+=5;if(w.box===1&&!session.learnedThisSession.has(hangul)){session.learnedThisSession.add(hangul);state.todayCount++;}}else{w.box=Math.max(w.box-1,0);}saveAll();}
+function advance(){session.idx++;renderStep();}
+
+function renderComplete(){
+  saveAll();const x=t();
+  const wrap=document.getElementById('study-wrap');
+  const learned=session.learnedThisSession.size;
+  wrap.innerHTML='<div class="complete"><div class="complete-emoji">🎉</div><div class="complete-title">'+x.sessionDone+'</div><div style="color:var(--muted)">'+x.greatWork+' '+lt(session.lesson.title)+'</div><div class="complete-stats"><div class="cstat"><div class="cstat-num">'+session.correct+'</div><div class="cstat-label">'+x.correctLabel+'</div></div><div class="cstat"><div class="cstat-num">'+learned+'</div><div class="cstat-label">'+x.newWords+'</div></div><div class="cstat"><div class="cstat-num">🔥'+state.streak+'</div><div class="cstat-label">'+x.streakLabel+'</div></div></div><button class="btn btn-primary btn-full" onclick="startLesson(\''+session.lesson.id+'\')">'+x.studyAgain+'</button><button class="btn btn-hard btn-full" style="background:var(--surface);color:var(--text);border:1px solid var(--border)" onclick="nav(\'home\',document.querySelectorAll(\'.tab\')[0])">'+x.backHome+'</button></div>';
+  showToast('🎉 +'+(session.correct*5)+' XP');
+}
+
+function renderProgress(){
+  const x=t();
+  const learned=Object.values(state.words).filter(w=>w.box>=1).length;
+  const mastered=Object.values(state.words).filter(w=>w.box>=4).length;
+  document.getElementById('ps-learned').textContent=learned;
+  document.getElementById('ps-streak').textContent=state.streak;
+  document.getElementById('ps-mastered').textContent=mastered;
+  document.getElementById('ps-total').textContent=state.totalXP;
+  const allWords=lessons.flatMap(l=>l.words);
+  const seen=allWords.filter(w=>state.words[w.k]&&state.words[w.k].seen>0);
+  const list=document.getElementById('word-list');
+  if(seen.length===0){list.innerHTML='<div style="text-align:center;color:var(--muted);padding:2rem">'+x.startLesson+'</div>';return;}
+  list.innerHTML=seen.map(w=>{const box=state.words[w.k].box;const dots='●'.repeat(box)+'○'.repeat(5-box);return '<div class="wl-item"><div class="wl-hangul">'+w.k+'</div><div class="wl-mid"><div class="wl-eng">'+m(w)+'</div><div class="wl-rom">'+w.r+' · <span style="color:var(--gold)">'+dots+'</span></div></div><button class="wl-audio" onclick="speak(\''+w.k+'\')">🔊</button></div>';}).join('');
+}
+
+// ============ SMART REVIEW ============
+function getWeakWords(){
+  // all words that have been seen, sorted by weakest (lowest box) first, wrong-heavy prioritized
+  const all=lessons.flatMap(l=>l.words);
+  const seen=all.filter(w=>state.words[w.k]&&state.words[w.k].seen>0);
+  // weak = box < 4 (not yet mastered)
+  const weak=seen.filter(w=>state.words[w.k].box<4);
+  weak.sort((a,b)=>{
+    const wa=state.words[a.k],wb=state.words[b.k];
+    if(wa.box!==wb.box)return wa.box-wb.box; // lower box first
+    // then more wrong answers first
+    const errA=wa.seen-wa.correct, errB=wb.seen-wb.correct;
+    return errB-errA;
+  });
+  return weak;
+}
+
+function renderReviewHome(){
+  document.getElementById('review-wrap').style.display='none';
+  const home=document.getElementById('review-home');
+  home.style.display='block';
+  const x=t();
+  const weak=getWeakWords();
+  const seen=lessons.flatMap(l=>l.words).filter(w=>state.words[w.k]&&state.words[w.k].seen>0);
+
+  let statusMsg, canStart=false;
+  if(seen.length===0){statusMsg=x.reviewNone;}
+  else if(weak.length===0){statusMsg=x.reviewMastered;}
+  else{statusMsg=weak.length+' '+x.reviewReady;canStart=true;}
+
+  home.innerHTML='<div class="section-title" style="margin-top:1.5rem">'+x.reviewTitle+'</div>'+
+    '<div style="color:var(--muted);font-size:0.85rem;margin-bottom:1.2rem;line-height:1.5">'+x.reviewSub+'</div>'+
+    '<div class="goal-card" style="flex-direction:column;align-items:flex-start;gap:1rem;margin-bottom:1.2rem">'+
+      '<div style="display:flex;align-items:center;gap:1rem;width:100%">'+
+        '<div style="font-size:2.5rem">🔄</div>'+
+        '<div style="flex:1"><div style="font-weight:700;font-size:1.05rem;color:'+(canStart?'var(--gold)':'var(--muted)')+'">'+statusMsg+'</div></div>'+
+      '</div>'+
+      (canStart?'<button class="btn btn-primary btn-full" onclick="startReview()">'+x.reviewStart+'</button>':'')+
+    '</div>';
+}
+
+let reviewSession=null;
+function startReview(){
+  const weak=getWeakWords().slice(0,12); // up to 12 per session
+  reviewSession={words:weak,idx:0,correct:0,improved:new Set()};
+  document.getElementById('review-home').style.display='none';
+  document.getElementById('review-wrap').style.display='block';
+  renderReviewStep();
+}
+
+function renderReviewStep(){
+  const wrap=document.getElementById('review-wrap');
+  const x=t();
+  if(reviewSession.idx>=reviewSession.words.length){
+    wrap.innerHTML='<div class="complete"><div class="complete-emoji">🎯</div><div class="complete-title">'+x.reviewDone+'</div><div class="complete-stats"><div class="cstat"><div class="cstat-num">'+reviewSession.correct+'/'+reviewSession.words.length+'</div><div class="cstat-label">'+x.correctLabel+'</div></div><div class="cstat"><div class="cstat-num">'+reviewSession.improved.size+'</div><div class="cstat-label">'+x.reviewImproved+'</div></div></div><button class="btn btn-primary btn-full" onclick="renderReviewHome()">'+x.backHome+'</button></div>';
+    return;
   }
-  localStorage.setItem('dq_lessons_done', JSON.stringify([...done]));
-  updateProgress();
+  const w=reviewSession.words[reviewSession.idx];
+  const progress=Math.round(reviewSession.idx/reviewSession.words.length*100);
+  // alternate between choose-meaning and recall
+  const mode=reviewSession.idx%2===0?'choose':'recall';
+  let top='<div class="study-top"><button class="study-back" onclick="renderReviewHome()">✕</button><div class="study-bar"><div class="study-bar-fill" style="width:'+progress+'%"></div></div><span class="study-count">'+(reviewSession.idx+1)+'/'+reviewSession.words.length+'</span></div>';
+  let body;
+  if(mode==='choose'){
+    const allM=lessons.flatMap(l=>l.words.map(z=>m(z)));
+    let opts=[m(w)];const others=allM.filter(e=>e!==m(w)).sort(()=>Math.random()-0.5);opts.push(...others.slice(0,3));opts=opts.sort(()=>Math.random()-0.5);
+    body='<div class="word-card" style="min-height:160px"><button class="audio-btn" onclick="speak(\''+w.k+'\')">🔊</button><div class="word-hangul small">'+w.k+'</div><div class="word-roman">'+w.r+'</div></div><div style="text-align:center;color:var(--muted);font-size:0.85rem;margin-bottom:0.8rem">'+x.whatMeans+'</div><div class="options">'+opts.map(o=>'<button class="option" onclick="checkReview(this,\''+esc(o)+'\',\''+esc(m(w))+'\',\''+w.k+'\')">'+o+'</button>').join('')+'</div><div class="feedback" id="rfb"></div>';
+  } else {
+    body='<div class="word-card" id="rev-card" onclick="flipReview(\''+w.k+'\',\''+w.r+'\',\''+esc(m(w))+'\')"><button class="audio-btn" onclick="event.stopPropagation();speak(\''+w.k+'\')">🔊</button><div class="word-hangul small">'+w.k+'</div><div class="tap-hint">'+x.remember+'</div></div><div class="recall-row" id="rev-btns" style="display:none"><button class="btn btn-hard" onclick="gradeReview(false,\''+w.k+'\')">'+x.forgot+'</button><button class="btn btn-easy" onclick="gradeReview(true,\''+w.k+'\')">'+x.knewIt+'</button></div>';
+  }
+  wrap.innerHTML=top+body;
+  setTimeout(()=>speak(w.k),350);
 }
 
-function goHome() {
-  document.getElementById('view-lesson').classList.remove('active');
-  document.getElementById('view-home').classList.add('active');
-  renderHome();
-  window.scrollTo(0, 0);
+function checkReview(el,chosen,correct,hangul){
+  const x=t();
+  document.querySelectorAll('#review-wrap .option').forEach(o=>o.disabled=true);
+  const fb=document.getElementById('rfb');speak(hangul);
+  const right=chosen===correct;
+  if(right){el.classList.add('correct');fb.className='feedback good show';fb.innerHTML=x.correct;}
+  else{el.classList.add('wrong');document.querySelectorAll('#review-wrap .option').forEach(o=>{if(o.textContent===correct)o.classList.add('correct');});fb.className='feedback bad show';fb.innerHTML=x.notQuite+' "<b>'+correct+'</b>"';}
+  applyReviewResult(right,hangul);
+  setTimeout(()=>{reviewSession.idx++;renderReviewStep();},right?1100:1800);
 }
 
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
+function flipReview(k,r,e){const card=document.getElementById('rev-card');speak(k);card.innerHTML='<button class="audio-btn" onclick="event.stopPropagation();speak(\''+k+'\')">🔊</button><div class="word-hangul small">'+k+'</div><div class="word-roman">'+r+'</div><div class="word-english">'+e+'</div>';document.getElementById('rev-btns').style.display='flex';}
+
+function gradeReview(right,hangul){
+  applyReviewResult(right,hangul);
+  reviewSession.idx++;renderReviewStep();
 }
+
+function applyReviewResult(right,hangul){
+  if(!state.words[hangul])state.words[hangul]={seen:0,correct:0,box:0};
+  const w=state.words[hangul];w.seen++;
+  if(right){w.correct++;w.box=Math.min(w.box+1,5);state.totalXP+=5;reviewSession.correct++;reviewSession.improved.add(hangul);}
+  else{w.box=Math.max(w.box-1,0);}
+  saveAll();
+}
+
+function nav(page,el,fromCode){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('page-'+page).classList.add('active');if(!fromCode){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));if(el)el.classList.add('active');}if(page==='home')renderHome();if(page==='progress')renderProgress();if(page==='review')renderReviewHome();window.scrollTo(0,0);}
+function showToast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),2600);}
 
 // INIT
+['en','ru','uz'].forEach(l=>document.getElementById('lang-'+l).classList.toggle('active',l===LANG));
+applyUI();
 renderHome();
-// Auto-open first module
-setTimeout(() => document.getElementById('mod-0').classList.add('open'), 300);
 </script>
 </body>
 </html>
